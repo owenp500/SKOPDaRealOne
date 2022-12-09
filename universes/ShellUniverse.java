@@ -12,7 +12,7 @@ public class ShellUniverse implements Universe {
 
 	public ShellUniverse () {
 
-		
+	
 		middleBackground = new MiddleBackground();
 		foreBackground = new ForegroundBackground();
 		backgroundBackground = new BackgroundBackground();

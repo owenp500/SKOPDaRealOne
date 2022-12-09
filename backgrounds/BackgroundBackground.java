@@ -15,7 +15,7 @@ public class BackgroundBackground implements Background {
 
     public BackgroundBackground() {
     	try {
-    		this.image = ImageIO.read(new File("res/paralaxed_bg/Background.png"));
+    		this.image = ImageIO.read(new File("res/parallax_bg/Background.png"));
     		backgroundWidth = (int) (image.getWidth(null) * 0.8);
     		backgroundHeight = (int) (image.getHeight(null) * 0.8);
     		offsetX = backgroundWidth / 2  ;  		
