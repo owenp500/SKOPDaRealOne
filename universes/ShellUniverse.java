@@ -2,12 +2,27 @@ import java.util.ArrayList;
 
 public class ShellUniverse implements Universe {
 
-	private boolean complete = false;	
+	private boolean complete = false;
+	private Background backgroundBackground = null;
+	private Background middleBackground = null;
+	private Background foreBackground = null;
 	private DisplayableSprite player1 = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	private ArrayList<Background> backgrounds = new ArrayList<Background>();
 
 	public ShellUniverse () {
+
+		
+		middleBackground = new MiddleBackground();
+		foreBackground = new ForegroundBackground();
+		backgroundBackground = new BackgroundBackground();
+		
+		
+		
+		backgrounds = new ArrayList<Background>();
+		backgrounds.add(middleBackground);
+		backgrounds.add(foreBackground);
+		backgrounds.add(backgroundBackground);
 
 		this.setXCenter(0);
 		this.setYCenter(0);
@@ -68,6 +83,16 @@ public class ShellUniverse implements Universe {
 			DisplayableSprite sprite = sprites.get(i);
 			sprite.update(this, keyboard, actual_delta_time);
     	} 
+		
+		this.backgroundBackground.setShiftX(player1.getCenterX() * 0.85);
+		this.backgroundBackground.setShiftY(player1.getCenterY() * 1 + 540);
+		
+		
+		this.middleBackground.setShiftX(player1.getCenterX() * 0.55);
+		this.middleBackground.setShiftY(player1.getCenterY() * 1 + 540);
+		
+		this.foreBackground.setShiftX(player1.getCenterX() * 0.25);
+		this.foreBackground.setShiftY(player1.getCenterY() * 1 + 540);
 		
 		
 	}
