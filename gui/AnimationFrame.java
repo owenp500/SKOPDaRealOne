@@ -19,7 +19,7 @@ public class AnimationFrame extends JFrame {
 	private int screenCenterX = SCREEN_WIDTH / 2;
 	private int screenCenterY = SCREEN_HEIGHT / 2;
 
-	private double scale = 1;
+	private double scale = 0;
 	//point in universe on which the screen will center
 	private double logicalCenterX = 0;		
 	private double logicalCenterY = 0;
@@ -291,7 +291,7 @@ public class AnimationFrame extends JFrame {
 							g.drawImage(sprite.getImage(), translateToScreenX(sprite.getMinX()), translateToScreenY(sprite.getMinY()), scaleLogicalX(sprite.getWidth()), scaleLogicalY(sprite.getHeight()), null);
 						}
 						else {
-							g.setColor(Color.BLUE);
+							g.setColor(Color.RED);
 							g.fillRect(translateToScreenX(sprite.getMinX()), translateToScreenY(sprite.getMinY()), scaleLogicalX(sprite.getWidth()), scaleLogicalY(sprite.getHeight()));
 						}
 					}

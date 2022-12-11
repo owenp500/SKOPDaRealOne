@@ -32,7 +32,7 @@ public class ShellUniverse implements Universe {
 	}
 
 	public double getScale() {
-		return 1;
+		return 0.968;
 	}
 
 	public double getXCenter() {
@@ -45,6 +45,7 @@ public class ShellUniverse implements Universe {
 
 	public void setXCenter(double xCenter) {
 	}
+
 
 	public void setYCenter(double yCenter) {
 	}
@@ -84,14 +85,14 @@ public class ShellUniverse implements Universe {
 			sprite.update(this, keyboard, actual_delta_time);
     	} 
 		
-		this.backgroundBackground.setShiftX(player1.getCenterX() * 0.85);
+		this.backgroundBackground.setShiftX(player1.getCenterX() * 0.25); 
 		this.backgroundBackground.setShiftY(player1.getCenterY() * 1 + 540);
 		
 		
-		this.middleBackground.setShiftX(player1.getCenterX() * 0.55);
+		this.middleBackground.setShiftX(player1.getCenterX() * 0.45);
 		this.middleBackground.setShiftY(player1.getCenterY() * 1 + 540);
 		
-		this.foreBackground.setShiftX(player1.getCenterX() * 0.25);
+		this.foreBackground.setShiftX(player1.getCenterX() * 0.85); 
 		this.foreBackground.setShiftY(player1.getCenterY() * 1 + 540);
 		
 		

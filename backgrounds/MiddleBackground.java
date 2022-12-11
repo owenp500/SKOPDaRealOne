@@ -7,9 +7,9 @@ import javax.imageio.ImageIO;
 public class MiddleBackground implements Background {
 
     private Image image;
-    private int backgroundWidth = 1920;
-    private int backgroundHeight = 1080;
-    private int offsetX = 0;
+    private int backgroundWidth;
+    private int backgroundHeight;
+    private int offsetX;
     private double shiftX = 0;
     private double shiftY = 540;
 
@@ -33,7 +33,7 @@ public class MiddleBackground implements Background {
 		Tile newTile = null;
 		
 		if (row == -1 ) {
-			newTile = new Tile(image, x, y, backgroundWidth, backgroundHeight, false);
+			newTile = new Tile(image, offsetX, y, backgroundWidth, backgroundHeight, false);
 		} else {
 			newTile = new Tile(null, x, y, backgroundWidth, backgroundHeight, false);
 		}
@@ -46,8 +46,9 @@ public class MiddleBackground implements Background {
 	public int getCol(double x) {
 		//which col is x sitting at?
 		int col = 0;
+		
 		if (backgroundWidth != 0) {
-			col = (int) ((x - offsetX)  / backgroundWidth);
+			col = (int) (x / backgroundWidth);
 			if (x < 0) {
 				return col - 1;
 			}
