@@ -32,7 +32,7 @@ public class ForegroundBackground implements Background {
 		int y = (row * backgroundHeight);
 		Tile newTile = null;
 		
-		if (row == -1 ) {
+		if (row == -1) {
 			newTile = new Tile(image, x, y, backgroundWidth, backgroundHeight, false);
 		} else {
 			newTile = new Tile(null, x, y, backgroundWidth, backgroundHeight, false);
