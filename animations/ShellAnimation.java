@@ -16,7 +16,7 @@ public class ShellAnimation implements Animation {
 		universeCount++;
 		
 		if (universeCount == 1) {
-			return new OwensSpecialUniverse();
+			return new GameUniverse();
 		}
 		else {
 			return null;
