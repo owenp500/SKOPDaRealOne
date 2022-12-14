@@ -29,7 +29,6 @@ public class SawSprite implements DisplayableSprite, MovableSprite, CollidingSpr
 	private double proximity;
 	private static String proximityMessage;
 	
-	
 	private double velocityX = 0;
 	private double velocityY = 0;
 	private double revolutions;
