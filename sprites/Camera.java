@@ -84,6 +84,10 @@ public class Camera implements DisplayableSprite {
 	public boolean getDispose() {
 		return dispose;
 	}
+	
+	public void setCenterX(double x) {
+		centerX = x;
+	}
 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		

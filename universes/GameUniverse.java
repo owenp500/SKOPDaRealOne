@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 
+
 public class GameUniverse implements Universe {
 	
 	private boolean complete = false;
@@ -24,7 +25,7 @@ public class GameUniverse implements Universe {
 	 *					*/
 	private DisplayableSprite camera = null;
 	private DisplayableSprite player1 = null;
-	private DisplayableSprite boss = null;
+	private DisplayableSprite player2 = null;
 
 	/*					*
 	 * Barrier blocks 	*
@@ -43,18 +44,18 @@ public class GameUniverse implements Universe {
 //		backgrounds.add(foreground);
 		
 		//ADD BARRIERS
-		BarrierSprite barrier1 =  new BarrierSprite(-400,0,400,1,true,0,200);
-		BarrierSprite barrier2 = new BarrierSprite(0,0,1,450,true, -400,0);
-		BarrierSprite barrier3 = new BarrierSprite(0,0,1,450,true, 400,0);
-		barriers.add(barrier1);barriers.add(barrier2); barriers.add(barrier3);
+//		BarrierSprite barrier1 =  new BarrierSprite(-400,0,400,1,true,0,200);
+//		BarrierSprite barrier2 = new BarrierSprite(0,0,1,450,true, -400,0);
+//		BarrierSprite barrier3 = new BarrierSprite(0,0,1,450,true, 400,0);
+//		barriers.add(barrier1);barriers.add(barrier2); barriers.add(barrier3);
 
 
 		//ADD SPRITES
-		player1 = new SaniruSprite(225,0,100,100);
 		camera = new Camera(17,296,100,100);
-		sprites.add(new Player(1,1));
-		sprites.add(camera);
-		sprites.add(player1); sprites.add(barrier1); sprites.add(barrier2); sprites.add(barrier3);
+		player1 = new Player(-351,351);
+		player2 = new Player(351,351);
+		sprites.add(camera); sprites.add(player1); sprites.add(player2); 
+//		sprites.add(barrier1); sprites.add(barrier2); sprites.add(barrier3);
 
 	}
 
@@ -97,10 +98,6 @@ public class GameUniverse implements Universe {
 		return camera;
 	}
 	
-	public DisplayableSprite getBoss() {
-		return boss;
-	}
-	
 	public DisplayableSprite getBarrier(boolean wall) {
 		if (wall) {
 			return this.wall;
@@ -120,7 +117,12 @@ public class GameUniverse implements Universe {
 	
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
 		
-
+		/*					*
+		 * Sets Camera POS.	*
+		 *					*/
+		
+		double averageX = (player1.getCenterX() + player2.getCenterX() )/ 2;
+		((Camera) camera).setCenterX(averageX);
 
 		if (keyboard.keyDownOnce(27)) {
 			complete = true;
@@ -132,9 +134,7 @@ public class GameUniverse implements Universe {
 			DisplayableSprite sprite = sprites.get(i);
 			sprite.update(this, keyboard, actual_delta_time);
     	}
-		
-		System.out.println(player1.getCenterX());
-		
+
 //		this.background.setShiftX(player1.getCenterX() * 0.85); 
 //		this.background.setShiftY(player1.getCenterY() * 1 + 540);
 //		
