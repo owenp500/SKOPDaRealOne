@@ -29,11 +29,11 @@ public class MiddleBackground implements Background {
 		//row is an index of tiles, with 0 being the at the origin
 		//col is an index of tiles, with 0 being the at the origin
 		int x = (col * backgroundWidth) - offsetX;
-		int y = (row * backgroundHeight);
+		int y = (row * backgroundHeight) - 788;
 		Tile newTile = null;
 		
-		if (row == -1) {
-			newTile = new Tile(image, offsetX, y, backgroundWidth, backgroundHeight, false);
+		if (row == 0 && col == 0) {
+			newTile = new Tile(image, x, y, backgroundWidth, backgroundHeight, false);
 		} else {
 			newTile = new Tile(null, x, y, backgroundWidth, backgroundHeight, false);
 		}

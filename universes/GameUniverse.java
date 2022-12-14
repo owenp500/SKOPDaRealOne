@@ -1,37 +1,68 @@
 import java.util.ArrayList;
 
-public class OwensSpecialUniverse implements Universe {
-
-	private boolean complete = false;	
-	private Background background = null;
-	private Background background2 = null;
+public class GameUniverse implements Universe {
+	
+	private boolean complete = false;
+	private double xCenter;
+	private double yCenter;
+	
 	private ArrayList<Background> backgrounds = new ArrayList<Background>();
-	private DisplayableSprite player1 = null;
-	private DisplayableSprite boss = null;
-	private DisplayableSprite boss2 = null;
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	private ArrayList<DisplayableSprite> barriers = new ArrayList<DisplayableSprite>();
-	private double xCenter = 0;
-	private double yCenter = 0;
-	
 	private ArrayList<DisplayableSprite> disposalList = new ArrayList<DisplayableSprite>();
+
+
+	/*					*
+	 * Backgrounds	 	*
+	 *					*/
+	private Background background = null;
+	private Background middleground = null;
+	private Background foreground = null;
 	
+	/*					*
+	 * Character	 	*
+	 *					*/
+	private DisplayableSprite camera = null;
+	private DisplayableSprite player1 = null;
+	private DisplayableSprite boss = null;
+
+	/*					*
+	 * Barrier blocks 	*
+	 *					*/
 	private DisplayableSprite floor = null;
 	private DisplayableSprite wall = null;
-	private DisplayableSprite wall2 = null;
-	private DisplayableSprite platform = null;
-	private DisplayableSprite platform2 = null;
 
-	public OwensSpecialUniverse () {
-		Background background = new OwensSpecialBackground();
+
+	public GameUniverse () {
+		//ADD BACKGROUNDS
+		background = new BackgroundBackground();
+		middleground = new MiddleBackground();
+		foreground = new ForegroundBackground();
+		backgrounds.add(middleground);
 		backgrounds.add(background);
+<<<<<<< HEAD:universes/OwensSpecialUniverse.java
+=======
+		backgrounds.add(foreground);
+		
+		//ADD BARRIERS
+		BarrierSprite barrier1 =  new BarrierSprite(-400,0,400,1,true,0,200);
+>>>>>>> 15664c6c8232467ea1b98662cd14876d11384282:universes/GameUniverse.java
 		BarrierSprite barrier2 = new BarrierSprite(0,0,1,450,true, -400,0);
 		BarrierSprite barrier3 = new BarrierSprite(0,0,1,450,true, 400,0);
 		barriers.add(barrier2); barriers.add(barrier3);
 		
+<<<<<<< HEAD:universes/OwensSpecialUniverse.java
 		sprites.add(new Player1(0,165));
 		sprites.add(barrier2);
 		sprites.add(barrier3);
+=======
+		//ADD SPRITES
+		player1 = new Player(225,0,100,100);
+		camera = new Camera(17,296,100,100);
+		sprites.add(new SawSprite(barriers));
+		sprites.add(camera);
+		sprites.add(player1); sprites.add(barrier1); sprites.add(barrier2); sprites.add(barrier3);
+>>>>>>> 15664c6c8232467ea1b98662cd14876d11384282:universes/GameUniverse.java
 		
 	}
 
@@ -70,6 +101,9 @@ public class OwensSpecialUniverse implements Universe {
 	public DisplayableSprite getPlayer1() {
 		return player1;
 	}
+	public DisplayableSprite getCamera() {
+		return camera;
+	}
 	
 	public DisplayableSprite getBoss() {
 		return boss;
@@ -89,7 +123,7 @@ public class OwensSpecialUniverse implements Universe {
 	}
 		
 	public boolean centerOnPlayer() {
-		return false;
+		return true;
 	}		
 	
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
@@ -106,6 +140,16 @@ public class OwensSpecialUniverse implements Universe {
 			DisplayableSprite sprite = sprites.get(i);
 			sprite.update(this, keyboard, actual_delta_time);
     	}
+		
+//		this.background.setShiftX(player1.getCenterX() * 0.85); 
+//		this.background.setShiftY(player1.getCenterY() * 1 + 540);
+//		
+//		
+//		this.middleground.setShiftX(player1.getCenterX() * 0.45);
+//		this.middleground.setShiftY(player1.getCenterY() * 1 + 540);
+//		
+//		this.foreground.setShiftX(player1.getCenterX() * 0.10); 
+//		this.foreground.setShiftY(player1.getCenterY() * 1 + 540);
 
 	}
 	

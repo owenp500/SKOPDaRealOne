@@ -4,7 +4,7 @@ import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-public class SimpleSprite implements DisplayableSprite {
+public class Camera implements DisplayableSprite {
 
 	private static Image image;	
 	private double centerX = 0;
@@ -15,7 +15,7 @@ public class SimpleSprite implements DisplayableSprite {
 
 	private final double VELOCITY = 200;
 
-	public SimpleSprite(double centerX, double centerY, double height, double width) {
+	public Camera(double centerX, double centerY, double height, double width) {
 		this(centerX, centerY);
 		
 		this.height = height;
@@ -23,7 +23,7 @@ public class SimpleSprite implements DisplayableSprite {
 	}
 
 	
-	public SimpleSprite(double centerX, double centerY) {
+	public Camera(double centerX, double centerY) {
 
 		this.centerX = centerX;
 		this.centerY = centerY;
@@ -113,7 +113,7 @@ public class SimpleSprite implements DisplayableSprite {
 		double deltaY = actual_delta_time * 0.001 * velocityY;
     	this.centerY += deltaY;
 
-		System.out.println(ConsoleUtility.describeSpriteCenter(this));
+		//System.out.println(ConsoleUtility.describeSpriteCenter(this));
 	}
 
 

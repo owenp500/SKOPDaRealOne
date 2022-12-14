@@ -26,7 +26,7 @@ public class ShellUniverse implements Universe {
 
 		this.setXCenter(0);
 		this.setYCenter(0);
-		player1 = new SimpleSprite(0,0);
+		player1 = new Camera(0,0);
 		sprites.add(player1);
 			
 	}
@@ -85,21 +85,19 @@ public class ShellUniverse implements Universe {
 			sprite.update(this, keyboard, actual_delta_time);
     	} 
 		
-		this.backgroundBackground.setShiftX(player1.getCenterX() * 0.25); 
-		this.backgroundBackground.setShiftY(player1.getCenterY() * 1 + 540);
 		
-		
-		this.middleBackground.setShiftX(player1.getCenterX() * 0.45);
-		this.middleBackground.setShiftY(player1.getCenterY() * 1 + 540);
-		
-		this.foreBackground.setShiftX(player1.getCenterX() * 0.85); 
-		this.foreBackground.setShiftY(player1.getCenterY() * 1 + 540);
 		
 		
 	}
 
 	public String toString() {
 		return "ShellUniverse";
+	}
+
+	@Override
+	public DisplayableSprite getCamera() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

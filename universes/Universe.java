@@ -18,6 +18,7 @@ public interface Universe {
 	public boolean isComplete();
 	public void setComplete(boolean complete);
 	
+	public DisplayableSprite getCamera();
 	public DisplayableSprite getPlayer1();
 	public boolean centerOnPlayer();
 
@@ -25,6 +26,8 @@ public interface Universe {
 	public ArrayList<Background> getBackgrounds();		
 
 	public void update(KeyboardInput keyboard, long actual_delta_time);
+
+
     
 	
 }
