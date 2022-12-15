@@ -94,22 +94,22 @@ public class Camera implements DisplayableSprite {
 		double velocityX = 0;
 		double velocityY = 0;
 		
-		//LEFT	
-		if (keyboard.keyDown(37)) {
-			velocityX = -VELOCITY;
-		}
-		//UP
-		if (keyboard.keyDown(38)) {
-			velocityY = -VELOCITY;			
-		}
-		// RIGHT
-		if (keyboard.keyDown(39)) {
-			velocityX += VELOCITY;
-		}
-		// DOWN
-		if (keyboard.keyDown(40)) {
-			velocityY += VELOCITY;			
-		}
+//		//LEFT	
+//		if (keyboard.keyDown(37)) {
+//			velocityX = -VELOCITY;
+//		}
+//		//UP
+//		if (keyboard.keyDown(38)) {
+//			velocityY = -VELOCITY;			
+//		}
+//		// RIGHT
+//		if (keyboard.keyDown(39)) {
+//			velocityX += VELOCITY;
+//		}
+//		// DOWN
+//		if (keyboard.keyDown(40)) {
+//			velocityY += VELOCITY;			
+//		}
 
 		double deltaX = actual_delta_time * 0.001 * velocityX;
         this.centerX += deltaX;

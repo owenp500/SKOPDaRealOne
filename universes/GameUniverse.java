@@ -1,4 +1,6 @@
+import java.security.Principal;
 import java.util.ArrayList;
+
 
 
 public class GameUniverse implements Universe {
@@ -6,6 +8,7 @@ public class GameUniverse implements Universe {
 	private boolean complete = false;
 	private double xCenter;
 	private double yCenter;
+	private double scale = 0.879;
 	
 	private ArrayList<Background> backgrounds = new ArrayList<Background>();
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
@@ -51,16 +54,16 @@ public class GameUniverse implements Universe {
 
 
 		//ADD SPRITES
-		camera = new Camera(17,296,100,100);
-		player1 = new Player(-351,351);
-		player2 = new Player(351,351);
+		camera = new Camera(17,216,100,100);
+		player1 = new Player1(-351,351);
+		player2 = new Player2(351,351);
 		sprites.add(camera); sprites.add(player1); sprites.add(player2); 
 //		sprites.add(barrier1); sprites.add(barrier2); sprites.add(barrier3);
 
 	}
 
 	public double getScale() {
-		return 1;
+		return scale;
 	}	
 	
 	public double getXCenter() {
@@ -114,13 +117,27 @@ public class GameUniverse implements Universe {
 	public boolean centerOnPlayer() {
 		return true;
 	}		
+	public Double abs(double x) {
+		if(x<0) {
+			return -x;
+		}
+		else { return x;}
+	}
 	
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
 		
 		/*					*
 		 * Sets Camera POS.	*
 		 *					*/
-		
+		double distanceX = abs(player1.getCenterX()) + abs(player2.getCenterX());
+		System.out.println(distanceX);
+		if (distanceX < 250) {
+			while(scale < 1.150) {
+				scale += 0.20;
+			}
+			
+		}
+
 		double averageX = (player1.getCenterX() + player2.getCenterX() )/ 2;
 		((Camera) camera).setCenterX(averageX);
 

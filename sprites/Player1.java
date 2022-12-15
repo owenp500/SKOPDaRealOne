@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
-public class Player implements DisplayableSprite, MovableSprite, CollidingSprite { 
+public class Player1 implements DisplayableSprite, MovableSprite, CollidingSprite { 
 	private double elapsedFrames = 0;
 	private int currentFrame = 0;
 
@@ -35,7 +35,7 @@ public class Player implements DisplayableSprite, MovableSprite, CollidingSprite
 	private final double ACCELERATION_Y = 750;
 	private final double GRAVITY = 1500;
 	
-	public Player(int centerX, int centerY) { 
+	public Player1(int centerX, int centerY) { 
 		this.centerX = centerX;
 		this.centerY = centerY;
 		
