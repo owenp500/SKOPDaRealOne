@@ -8,11 +8,10 @@ public class GameUniverse implements Universe {
 	private boolean complete = false;
 	private double xCenter;
 	private double yCenter;
-	private double scale = 0.879;
+	private double scale = 1.300;
 	
 	private ArrayList<Background> backgrounds = new ArrayList<Background>();
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
-	private ArrayList<DisplayableSprite> barriers = new ArrayList<DisplayableSprite>();
 	private ArrayList<DisplayableSprite> disposalList = new ArrayList<DisplayableSprite>();
 
 
@@ -47,23 +46,25 @@ public class GameUniverse implements Universe {
 //		backgrounds.add(foreground);
 		
 		//ADD BARRIERS
-//		BarrierSprite barrier1 =  new BarrierSprite(-400,0,400,1,true,0,200);
-//		BarrierSprite barrier2 = new BarrierSprite(0,0,1,450,true, -400,0);
-//		BarrierSprite barrier3 = new BarrierSprite(0,0,1,450,true, 400,0);
-//		barriers.add(barrier1);barriers.add(barrier2); barriers.add(barrier3);
-
+		BarrierSprite barrier1 =  new BarrierSprite(0,0,5,450,true, -700,360);
+		BarrierSprite barrier2 = new BarrierSprite(0,0,5,450,true, 700,360);
 
 		//ADD SPRITES
 		camera = new Camera(17,216,100,100);
 		player1 = new Player1(-351,351);
 		player2 = new Player2(351,351);
 		sprites.add(camera); sprites.add(player1); sprites.add(player2); 
-//		sprites.add(barrier1); sprites.add(barrier2); sprites.add(barrier3);
+		sprites.add(barrier1); 
+		sprites.add(barrier2); 
 
 	}
 
 	public double getScale() {
 		return scale;
+	}
+	
+	public void getScale(double scale) {
+		this.scale = scale;
 	}	
 	
 	public double getXCenter() {
@@ -129,15 +130,6 @@ public class GameUniverse implements Universe {
 		/*					*
 		 * Sets Camera POS.	*
 		 *					*/
-		double distanceX = abs(player1.getCenterX()) + abs(player2.getCenterX());
-		System.out.println(distanceX);
-		if (distanceX < 250) {
-			while(scale < 1.150) {
-				scale += 0.20;
-			}
-			
-		}
-
 		double averageX = (player1.getCenterX() + player2.getCenterX() )/ 2;
 		((Camera) camera).setCenterX(averageX);
 
