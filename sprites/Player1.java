@@ -10,7 +10,7 @@ public class Player1 implements DisplayableSprite, MovableSprite, CollidingSprit
 	private int currentFrame = 0;
 
 	private final static int FRAMES = 4;
-	private double framesPerSecond = 30;
+	private double framesPerSecond = 4;
 	private static Image[] frames = new Image[FRAMES];
 	private static boolean framesLoaded = false;	
 
@@ -18,8 +18,8 @@ public class Player1 implements DisplayableSprite, MovableSprite, CollidingSprit
 
 	private double centerX = 0;
 	private double centerY = 0;
-	private double height = 50;
-	private double width = 50;
+	private double height = 200;
+	private double width = 200;
 	private boolean dispose = false;
 	private boolean isAtExit = false;
 	private static String proximityMessage;
@@ -41,7 +41,7 @@ public class Player1 implements DisplayableSprite, MovableSprite, CollidingSprit
 		
 		if (framesLoaded == false) {
 			for (int frame = 0; frame < FRAMES; frame++) {
-				String filename = String.format("res/OCP/saw(%d).png" , frame);
+				String filename = String.format("res/Doug's Sprites/DougTheAdventurer%d.png" , frame+1l);
 				
 				try {
 					frames[frame] = ImageIO.read(new File(filename));
@@ -56,9 +56,12 @@ public class Player1 implements DisplayableSprite, MovableSprite, CollidingSprit
 			}
 		}		
 	}	
-	public Image getImage() {		
-		return frames[currentFrame];
+	public Image getImage() {	
+		System.out.println(currentFrame);
+		return frames[((int) elapsedFrames)%4];
+		
 	}
+
 	public void setCenterX(double centerX) {		
 		this.centerX = centerX;
 	}

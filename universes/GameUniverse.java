@@ -46,8 +46,8 @@ public class GameUniverse implements Universe {
 		backgrounds.add(foreground);
 		
 		//ADD BARRIERSjjjjjj
-		BarrierSprite barrier1 =  new BarrierSprite(0,0,5,450,true, -700,360);
-		BarrierSprite barrier2 = new BarrierSprite(0,0,5,450,true, 700,360);
+		BarrierSprite barrier1 =  new BarrierSprite(0,0,5,450,false, -700,360);
+		BarrierSprite barrier2 = new BarrierSprite(0,0,5,450,false, 700,360);
 
 		//ADD SPRITES
 		camera = new Camera(17,216,100,100);
@@ -151,14 +151,14 @@ public class GameUniverse implements Universe {
     	}
 
 		this.background.setShiftX(camera.getCenterX() * 0.85); 
-		//this.background.setShiftY(camera.getCenterY() * 1 + 540);
+//		this.background.setShiftY(camera.getCenterY() * 1 + 540);
 		
 		
 		this.middleground.setShiftX(camera.getCenterX() * 0.45);
-		//this.middleground.setShiftY(camera.getCenterY() * 1 + 540);
+//		this.middleground.setShiftY(camera.getCenterY() * 1 + 540);
 		
 		this.foreground.setShiftX(camera.getCenterX() * 0.10); 
-		//this.foreground.setShiftY(camera.getCenterY() * 1 + 540);
+//		this.foreground.setShiftY(camera.getCenterY() * 1 + 540);
 
 	}
 	
