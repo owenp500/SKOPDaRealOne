@@ -151,14 +151,14 @@ public class GameUniverse implements Universe {
     	}
 
 		this.background.setShiftX(camera.getCenterX() * 0.85); 
-		this.background.setShiftY(camera.getCenterY() * 1 + 540);
+		//this.background.setShiftY(camera.getCenterY() * 1 + 540);
 		
 		
 		this.middleground.setShiftX(camera.getCenterX() * 0.45);
-		this.middleground.setShiftY(camera.getCenterY() * 1 + 540);
+		//this.middleground.setShiftY(camera.getCenterY() * 1 + 540);
 		
 		this.foreground.setShiftX(camera.getCenterX() * 0.10); 
-		this.foreground.setShiftY(camera.getCenterY() * 1 + 540);
+		//this.foreground.setShiftY(camera.getCenterY() * 1 + 540);
 
 	}
 	
