@@ -42,8 +42,8 @@ public class GameUniverse implements Universe {
 		middleground = new MiddleBackground();
 		foreground = new ForegroundBackground();
 		backgrounds.add(middleground);
-//		backgrounds.add(background);
-//		backgrounds.add(foreground);
+		backgrounds.add(background);
+		backgrounds.add(foreground);
 		
 		//ADD BARRIERS
 		BarrierSprite barrier1 =  new BarrierSprite(0,0,5,450,true, -700,360);
@@ -137,6 +137,12 @@ public class GameUniverse implements Universe {
 			complete = true;
 		}
 		
+		
+		if (keyboard.keyDownOnce(84)) {
+			System.out.println(abs(player1.getCenterX()));
+			System.out.println(abs(player2.getCenterX()));
+		}
+		
 		disposeSprites();
 
 		for (int i = 0; i < sprites.size(); i++) {
@@ -144,15 +150,15 @@ public class GameUniverse implements Universe {
 			sprite.update(this, keyboard, actual_delta_time);
     	}
 
-//		this.background.setShiftX(player1.getCenterX() * 0.85); 
-//		this.background.setShiftY(player1.getCenterY() * 1 + 540);
-//		
-//		
-//		this.middleground.setShiftX(player1.getCenterX() * 0.45);
-//		this.middleground.setShiftY(player1.getCenterY() * 1 + 540);
-//		
-//		this.foreground.setShiftX(player1.getCenterX() * 0.10); 
-//		this.foreground.setShiftY(player1.getCenterY() * 1 + 540);
+		this.background.setShiftX(player1.getCenterX() * 0.85); 
+		this.background.setShiftY(player1.getCenterY() * 1 + 540);
+		
+		
+		this.middleground.setShiftX(player1.getCenterX() * 0.45);
+		this.middleground.setShiftY(player1.getCenterY() * 1 + 540);
+		
+		this.foreground.setShiftX(player1.getCenterX() * 0.10); 
+		this.foreground.setShiftY(player1.getCenterY() * 1 + 540);
 
 	}
 	

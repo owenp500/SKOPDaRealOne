@@ -153,8 +153,6 @@ public class AnimationFrame extends JFrame {
 			backgrounds = universe.getBackgrounds();
 			centreOnPlayer = universe.centerOnPlayer();
 			this.scale = universe.getScale();
-			this.logicalCenterX = universe.getXCenter();
-			this.logicalCenterY = universe.getYCenter();
 
 			// main game loop
 			while (stop == false && universe.isComplete() == false) {
@@ -187,11 +185,18 @@ public class AnimationFrame extends JFrame {
 				updateTime();
 				
 				universe.update(keyboard, actual_delta_time);
-				updateControls();
 
 				//REFRESH
-				this.logicalCenterX = universe.getXCenter();
-				this.logicalCenterY = universe.getYCenter();
+				if (camera != null && centreOnPlayer) {
+					logicalCenterX = camera.getCenterX();
+					logicalCenterY = camera.getCenterY();     
+				}
+				else {
+					this.logicalCenterX = universe.getXCenter();
+					this.logicalCenterY = universe.getYCenter();
+				}
+				
+				updateControls();
 				this.repaint();
 			}
 
@@ -274,11 +279,6 @@ public class AnimationFrame extends JFrame {
 				return;
 			}
 			
-			if (camera != null && centreOnPlayer) {
-				logicalCenterX = camera.getCenterX();
-				logicalCenterY = camera.getCenterY();     
-			}
-
 			if (backgrounds != null) {
 				for (Background background: backgrounds) {
 					paintBackground(g, background);
