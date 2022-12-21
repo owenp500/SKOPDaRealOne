@@ -163,7 +163,7 @@ public class GameUniverse implements Universe {
 	}
 	
 	 protected void disposeSprites() {
-	        
+	      
 	    	//collect a list of sprites to dispose
 	    	//this is done in a temporary list to avoid a concurrent modification exception
 			for (int i = 0; i < sprites.size(); i++) {
