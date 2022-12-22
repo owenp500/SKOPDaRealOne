@@ -8,15 +8,14 @@ import javax.imageio.ImageIO;
 public class Player implements DisplayableSprite , MovableSprite, CollidingSprite {
 	
 	private static final int PERIOD_LENGTH = 200;			
-	private static final int IMAGES_IN_CYCLE = 4;
-	
+
 	private long elapsedTime = 0;
 	protected double elapsedFrames = 0;
 	protected int currentFrame = 0;
 		
 	private boolean facingRight = true;
 
-	protected final static int FRAMES = 4;
+	protected final static int FRAMES =12;
 
 	private static Image[] frames = new Image[FRAMES];
 	private static boolean framesLoaded = false;
@@ -37,6 +36,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	protected static String proximityMessage;
 	protected boolean isMoving = false;
 	
+	protected String imageFolder = null;
 	
 	protected double velocityX = 0;
 	protected double velocityY = 0;
@@ -48,13 +48,14 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private final double ACCELERATION_Y = 750;
 	private final double GRAVITY = 1500;
 	
-	public Player(int centerX, int centerY) { 
+	public Player(int centerX, int centerY, String imageFolder) { 
+		
 		this.centerX = centerX;
 		this.centerY = centerY;
 		
 		if (framesLoaded == false) {
 			for (int frame = 0; frame < FRAMES; frame++) {
-				String filename = String.format("res/Doug's Sprites/DougTheAdventurer%d.png" , frame+1);
+				String filename = String.format("res/%s/DougTheAdventurer%d.png" , imageFolder,frame+1);
 				
 				try {
 					frames[frame] = ImageIO.read(new File(filename));
@@ -77,7 +78,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	}
 	public Image getImage() {	
 		long period = elapsedTime / PERIOD_LENGTH;
-		int frame = (int) (period % IMAGES_IN_CYCLE);
+		int frame = (int) (period % FRAMES);
 		return frames[frame];
 		
 	}
