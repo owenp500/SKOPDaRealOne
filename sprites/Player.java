@@ -8,15 +8,16 @@ import javax.imageio.ImageIO;
 public class Player implements DisplayableSprite , MovableSprite, CollidingSprite {
 	
 	private static final int PERIOD_LENGTH = 200;			
-	private static final int IMAGES_IN_CYCLE = 5;
+	private static final int IMAGES_IN_CYCLE = 4;
 	
+	private long elapsedTime = 0;
 	protected double elapsedFrames = 0;
 	protected int currentFrame = 0;
 	
 	
 
 	protected final static int FRAMES = 4;
-	private double framesPerSecond = 4;
+
 	private static Image[] frames = new Image[FRAMES];
 	private static boolean framesLoaded = false;
 	
@@ -52,7 +53,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		
 		if (framesLoaded == false) {
 			for (int frame = 0; frame < FRAMES; frame++) {
-				String filename = String.format("res/Doug's Sprites/DougTheAdventurer%d.png" , frame+1l);
+				String filename = String.format("res/Doug's Sprites/DougTheAdventurer%d.png" , frame+1);
 				
 				try {
 					frames[frame] = ImageIO.read(new File(filename));
@@ -74,8 +75,11 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		downButton = down;
 	}
 	public Image getImage() {	
-		System.out.println(elapsedFrames);
-		return frames[currentFrame];
+		long period = elapsedTime / PERIOD_LENGTH;
+		int frame = (int) (period % IMAGES_IN_CYCLE);
+		System.out.printf("%d\n", frame);
+	//	frame = IMAGES_IN_CYCLE + frame;
+		return frames[frame];
 		
 	}
 
@@ -225,7 +229,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 					
 		
 		
-		
+		elapsedTime +=  actual_delta_time;
 		this.elapsedFrames ++;
 		currentFrame = (int) Math.abs(this.elapsedFrames % FRAMES);		
 		
