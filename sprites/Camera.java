@@ -45,7 +45,7 @@ public class Camera implements DisplayableSprite {
 	//DISPLAYABLE
 	
 	public boolean getVisible() {
-		return true;
+		return false;
 	}
 	
 	public double getMinX() {
