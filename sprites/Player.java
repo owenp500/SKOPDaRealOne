@@ -44,10 +44,6 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	protected long score =  0;
 	protected int health = 5;
 	
-	//y acceleration affects jump height and how fast you can slam to the ground
-	private final double ACCELERATION_Y = 750;
-	private final double GRAVITY = 1500;
-	
 	public Player(int centerX, int centerY, String imageFolder) { 
 		
 		this.centerX = centerX;
