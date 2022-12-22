@@ -2,8 +2,8 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javax.imageio.ImageIO;
+
 
 public class Player implements DisplayableSprite , MovableSprite, CollidingSprite {
 	
@@ -35,6 +35,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	protected boolean dispose = false;
 	protected boolean isAtExit = false;
 	protected static String proximityMessage;
+	protected boolean isMoving = false;
 	
 	
 	protected double velocityX = 0;
@@ -77,8 +78,6 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public Image getImage() {	
 		long period = elapsedTime / PERIOD_LENGTH;
 		int frame = (int) (period % IMAGES_IN_CYCLE);
-		System.out.printf("%d\n", frame);
-	//	frame = IMAGES_IN_CYCLE + frame;
 		return frames[frame];
 		
 	}
@@ -210,13 +209,18 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		if (keyboard.keyDown(leftButton)) {
 			if (velocityX>= -100) {
 			velocityX -= 40; 
+			isMoving = true;
 			}
 		}
 		//
-		if (keyboard.keyDown(rightButton)) {
+		else if (keyboard.keyDown(rightButton)) {
 			if(velocityX <= 100) {
 				velocityX += 40;
+				isMoving = true;
 			}
+		}
+		else {
+			isMoving = false;
 		}
 
 		double deltaX = actual_delta_time * 0.001 * velocityX;

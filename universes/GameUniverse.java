@@ -18,7 +18,7 @@ public class GameUniverse implements Universe {
 	/*					*
 	 * Backgrounds	 	*
 	 *					*/
-	private Background background = null;
+	private Background background = null;	
 	private Background middleground = null;
 	private Background foreground = null;
 	
@@ -45,7 +45,7 @@ public class GameUniverse implements Universe {
 		backgrounds.add(background);
 		backgrounds.add(foreground);
 		
-		//ADD BARRIERSjjjjjj
+		//ADD BARRIER
 		BarrierSprite barrier1 =  new BarrierSprite(0,0,5,450,false, -700,360);
 		BarrierSprite barrier2 = new BarrierSprite(0,0,5,450,false, 700,360);
 
@@ -135,12 +135,6 @@ public class GameUniverse implements Universe {
 
 		if (keyboard.keyDownOnce(27)) {
 			complete = true;
-		}
-		
-		
-		if (keyboard.keyDownOnce(84)) {
-			System.out.println(abs(player1.getCenterX()));
-			System.out.println(abs(player2.getCenterX()));
 		}
 		
 		disposeSprites();
