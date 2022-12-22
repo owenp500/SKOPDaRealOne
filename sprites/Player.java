@@ -13,8 +13,8 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private long elapsedTime = 0;
 	protected double elapsedFrames = 0;
 	protected int currentFrame = 0;
-	
-	
+		
+	private boolean facingRight = true;
 
 	protected final static int FRAMES = 4;
 
@@ -82,7 +82,10 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		return frames[frame];
 		
 	}
-
+	public void setFacingRight(boolean right) {
+		facingRight = right;
+	}
+	
 	public void setCenterX(double centerX) {		
 		this.centerX = centerX;
 	}

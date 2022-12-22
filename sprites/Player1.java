@@ -7,6 +7,7 @@ public class Player1 extends Player {
 		//assigning the control scheme for this player type
 		//attack: i || left: j || right l|| down: k
 		super.setKeys(73,74,76,75);
+		super.setFacingRight(false);
 	}
 	
 	
