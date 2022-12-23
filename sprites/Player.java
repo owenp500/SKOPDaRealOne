@@ -15,7 +15,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		
 	private boolean facingRight = true;
 
-	protected final static int FRAMES =12;
+	protected final static int FRAMES = 4;
 
 	private static Image[] frames = new Image[FRAMES];
 	private static boolean framesLoaded = false;
@@ -44,13 +44,24 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	protected long score =  0;
 	protected int health = 5;
 	
+	protected Direction direction = Direction.IDLE;
+	protected enum Direction { IDLE(0), MOVE(1), DEFFEND(2);
+		private int value = 0;
+		private Direction(int value) {
+			this.value = value;
+		}
+	};
+	
+	
 	public Player(int centerX, int centerY, String imageFolder) { 
 		
 		this.centerX = centerX;
 		this.centerY = centerY;
 		
 		if (framesLoaded == false) {
-			for (int frame = 0; frame < FRAMES; frame++) {
+			
+			frames = new Image[12];
+			for (int frame = 0; frame < 12; frame++) {
 				String filename = String.format("res/%s/DougTheAdventurer%d.png" , imageFolder,frame+1);
 				
 				try {
@@ -75,7 +86,8 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public Image getImage() {	
 		long period = elapsedTime / PERIOD_LENGTH;
 		int frame = (int) (period % FRAMES);
-		return frames[frame];
+		int index = direction.value * FRAMES + frame;
+		return frames[index];
 		
 	}
 	public void setFacingRight(boolean right) {
@@ -206,18 +218,20 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		if (keyboard.keyDown(leftButton)) {
 			if (velocityX>= -100) {
 			velocityX -= 40; 
-			isMoving = true;
+			direction = Direction.MOVE;
 			}
 		}
-		//
 		else if (keyboard.keyDown(rightButton)) {
 			if(velocityX <= 100) {
 				velocityX += 40;
-				isMoving = true;
+				direction = Direction.MOVE;
 			}
 		}
+		else if (keyboard.keyDown(downButton)) { //temporary placement key for simple defend
+			direction = Direction.DEFFEND;
+		}
 		else {
-			isMoving = false;
+			direction = Direction.IDLE;
 		}
 
 		double deltaX = actual_delta_time * 0.001 * velocityX;
