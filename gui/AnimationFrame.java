@@ -108,20 +108,20 @@ public class AnimationFrame extends JFrame {
 		getContentPane().add(btnPauseRun);
 		getContentPane().setComponentZOrder(btnPauseRun, 0);
 
-		lblTop = new JLabel("Time: ");
-		lblTop.setForeground(Color.WHITE);
+		lblTop = new JLabel("HEALTH: ");
+		lblTop.setForeground(Color.RED);
 		lblTop.setFont(new Font("Consolas", Font.BOLD, 20));
 		lblTop.setBounds(16, 22, SCREEN_WIDTH - 16, 30);
 		getContentPane().add(lblTop);
 		getContentPane().setComponentZOrder(lblTop, 0);
 
-		lblBottom = new JLabel("Status");
-		lblBottom.setForeground(Color.WHITE);
-		lblBottom.setFont(new Font("Consolas", Font.BOLD, 30));
-		lblBottom.setBounds(16, SCREEN_HEIGHT - 30 - 16, SCREEN_WIDTH - 16, 36);
-		lblBottom.setHorizontalAlignment(SwingConstants.CENTER);
-		getContentPane().add(lblBottom);
-		getContentPane().setComponentZOrder(lblBottom, 0);
+//		lblBottom = new JLabel("Status");
+//		lblBottom.setForeground(Color.BLACK);
+//		lblBottom.setFont(new Font("Consolas", Font.BOLD, 30));
+//		lblBottom.setBounds(16, SCREEN_HEIGHT - 30 - 16, SCREEN_WIDTH - 16, 36);
+//		lblBottom.setHorizontalAlignment(SwingConstants.CENTER);
+//		getContentPane().add(lblBottom);
+//		getContentPane().setComponentZOrder(lblBottom, 0);
 
 	}
 
@@ -213,11 +213,11 @@ public class AnimationFrame extends JFrame {
 
 	private void updateControls() {
 		
-		this.lblTop.setText(String.format("Time: %9.3f;  centerX: %5d; centerY: %5d;  scale: %3.3f", elapsed_time / 1000.0, screenCenterX, screenCenterY, scale));
-		this.lblBottom.setText(Integer.toString(universeLevel));
-		if (universe != null) {
-			this.lblBottom.setText(universe.toString());
-		}
+//		this.lblTop.setText(String.format("Time: %9.3f;  centerX: %5d; centerY: %5d;  scale: %3.3f", elapsed_time / 1000.0, screenCenterX, screenCenterY, scale));
+//		this.lblBottom.setText(Integer.toString(universeLevel));
+//		if (universe != null) {
+//			this.lblBottom.setText(universe.toString());
+//		}
 
 	}
 

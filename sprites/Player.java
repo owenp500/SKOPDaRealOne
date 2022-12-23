@@ -34,7 +34,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	protected boolean dispose = false;
 	protected boolean isAtExit = false;
 	protected static String proximityMessage;
-	protected boolean isMoving = false;
+	protected int player;
 	
 	protected String imageFolder = null;
 	
@@ -83,6 +83,11 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		rightButton = right;
 		downButton = down;
 	}
+	
+	public void setPlayer(int player) {
+		this.player = player;
+	}
+	
 	public Image getImage() {	
 		long period = elapsedTime / PERIOD_LENGTH;
 		int frame = (int) (period % FRAMES);
@@ -90,6 +95,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		return frames[index];
 		
 	}
+	
 	public void setFacingRight(boolean right) {
 		facingRight = right;
 	}
@@ -187,6 +193,38 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		return colliding;		
 	}
 	
+	protected boolean checkCollisionWithPlayer(ArrayList<DisplayableSprite> sprites, double deltaX, double deltaY) {
+
+		//deltaX and deltaY represent the potential change in position
+		boolean colliding = false;
+		
+		if (player == 1) {
+			for (DisplayableSprite sprite : sprites) {
+				if (sprite instanceof Player2) {
+					if (CollisionDetection.pixelBasedOverlaps(this, sprite,deltaX,deltaY)) {
+						colliding = true;
+						break;					
+					}
+				}
+			}
+			return colliding;
+		}
+		if (player == 2) {
+			for (DisplayableSprite sprite : sprites) {
+				if (sprite instanceof Player1) {
+					if (CollisionDetection.pixelBasedOverlaps(this, sprite,deltaX,deltaY)) {
+						colliding = true;
+						break;					
+					}
+				}
+			}
+			return colliding;	
+		}
+		
+				
+		return colliding;		
+	}
+	
 	public long getScore() {
 		return score;
 	}
@@ -236,9 +274,10 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 
 		double deltaX = actual_delta_time * 0.001 * velocityX;
 		
-		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);		
+		boolean collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);
+		boolean collidingPlayer = checkCollisionWithPlayer(universe.getSprites(), deltaX, 0);
 		
-		if (collidingBarrierX) {
+		if (collidingBarrierX || collidingPlayer) {
 			velocityX  = 0;
 		}
 		if (collidingBarrierX == false) {

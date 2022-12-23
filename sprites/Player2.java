@@ -14,6 +14,9 @@ public class Player2 extends Player {
 		//although if you want to change the keys than feel free to use the method here
 		super.setFacingRight(false);
 		
+		//assigns whether the player is 'player1' or 'player2'
+		super.setPlayer(2);
+		
 	}
 	
 	
