@@ -36,7 +36,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	protected static String proximityMessage;
 	protected int player;
 	
-	protected String imageFolder = null;
+//	protected String imageFolder = null;
 	
 	protected double velocityX = 0;
 	protected double velocityY = 0;
