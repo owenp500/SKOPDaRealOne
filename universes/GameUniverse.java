@@ -51,8 +51,8 @@ public class GameUniverse implements Universe {
 
 		//ADD SPRITES
 		camera = new Camera(17,216,100,100);
-		player1 = new Player1(-351,351);
-		player2 = new Player2(351,351);
+		player1 = new Player1(-351,351, "Doug's Sprites");
+		player2 = new Player2(351,351, "Phil's Sprites");
 		sprites.add(camera); sprites.add(player1); sprites.add(player2); 
 		sprites.add(barrier1); 
 		sprites.add(barrier2); 
