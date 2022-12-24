@@ -44,10 +44,22 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	protected long score =  0;
 	protected int health = 5;
 	
-	protected Direction direction = Direction.IDLE;
-	protected enum Direction { IDLE(0), MOVE(1), DEFFEND(2);
+	//these variables detail how many frames each State should take to complete
+	//changing these constants will change the length of each state
+	private final int ATTACK_FRAMES = 4;
+	private final int DEFEND_FRAMES = 4; 
+	private final int HIT_FRAMES = 4;
+	private final int DOWN_FRAMES = 4;
+	//certain player states like attacking and blocking have to last a certain amount of time. 
+	//if a player attacks and misses the other player should be given an opportunity to respond, this is one of the core mechanics within all fighting games
+	
+	//an action like crouching does not need to have any time limit, however attacking necessarily does need a limit
+
+	
+	protected State state = State.IDLE;
+	protected enum State { IDLE(0), MOVE(1), DEFFEND(2);
 		private int value = 0;
-		private Direction(int value) {
+		private State(int value) {
 			this.value = value;
 		}
 	};
@@ -91,7 +103,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public Image getImage() {	
 		long period = elapsedTime / PERIOD_LENGTH;
 		int frame = (int) (period % FRAMES);
-		int index = direction.value * FRAMES + frame;
+		int index = state.value * FRAMES + frame;
 		return frames[index];
 		
 	}
@@ -237,40 +249,29 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	}
 	
 	
-	//this method is designed so that you have less grip while on the ceiling.
-	//rather than calculating the average between the rev and vel I sort of calculate the 'average of the average'.
-	// if v = 0 and r = 50
-	// on the ground they both average out to 25
-	// while on the roof in the same situation v = 12.5 and r= 37.5;
-	//(r + v) / 2 = average
-	//((r + v) / 2 + v) / 2 = average between average and velocity
-	// simplified: (r + 3v) / 4 
-	
-	
-	
-	
 	//TODO! start of update function 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		velocityX -= velocityX/8;
-		//constant downward y velocity for gravity
+
 		if (keyboard.keyDown(leftButton)) {
 			if (velocityX>= -100) {
 			velocityX -= 40; 
-			direction = Direction.MOVE;
+			state = State.MOVE;
 			}
 		}
 		else if (keyboard.keyDown(rightButton)) {
 			if(velocityX <= 100) {
 				velocityX += 40;
-				direction = Direction.MOVE;
+				state = State.MOVE;
 			}
 		}
 		else if (keyboard.keyDown(downButton)) { //temporary placement key for simple defend
-			direction = Direction.DEFFEND;
+			state = State.DEFFEND;
 		}
 		else {
-			direction = Direction.IDLE;
+			state = State.IDLE;
 		}
+		
 
 		double deltaX = actual_delta_time * 0.001 * velocityX;
 		
@@ -284,8 +285,6 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			this.centerX += actual_delta_time * 0.001 * velocityX;
 		}
 					
-		
-		
 		elapsedTime +=  actual_delta_time;
 		this.elapsedFrames ++;
 		currentFrame = (int) Math.abs(this.elapsedFrames % FRAMES);		
