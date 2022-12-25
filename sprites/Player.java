@@ -57,7 +57,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 
 	
 	protected State state = State.IDLE;
-	protected enum State { IDLE(0), MOVE(1), DEFFEND(2);
+	protected enum State { IDLE(0), MOVE(1), DEFFEND(2), ATTACK(3);
 		private int value = 0;
 		private State(int value) {
 			this.value = value;
@@ -267,6 +267,9 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		}
 		else if (keyboard.keyDown(downButton)) { //temporary placement key for simple defend
 			state = State.DEFFEND;
+		}
+		else if (keyboard.keyDown(attackButton)) {
+			state = State.ATTACK;
 		}
 		else {
 			state = State.IDLE;

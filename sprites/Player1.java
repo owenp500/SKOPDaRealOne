@@ -12,8 +12,4 @@ public class Player1 extends Player {
 		//assigns whether the player is 'player1' or player'1'
 		super.setPlayer(1);
 	}
-	
-	
-	
-	
 }

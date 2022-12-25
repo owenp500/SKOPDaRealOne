@@ -212,7 +212,7 @@ public class AnimationFrame extends JFrame {
 	}
 
 	private void updateControls() {
-		
+		this.lblTop.setText(String.format("Health: %d", ((Player) player1).getHealth()));
 //		this.lblTop.setText(String.format("Time: %9.3f;  centerX: %5d; centerY: %5d;  scale: %3.3f", elapsed_time / 1000.0, screenCenterX, screenCenterY, scale));
 //		this.lblBottom.setText(Integer.toString(universeLevel));
 //		if (universe != null) {
