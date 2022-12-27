@@ -10,39 +10,39 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private static final int PERIOD_LENGTH = 200;			
 
 	private long elapsedTime = 0;
-	protected double elapsedFrames = 0;
-	protected int currentFrame = 0;
+	private double elapsedFrames = 0;
+	private int currentFrame = 0;
 		
 	private boolean facingRight = true;
 
-	protected final static int FRAMES = 4;
+	private final static int FRAMES = 4;
 
 	private static Image[] frames = new Image[FRAMES];
 	private static boolean framesLoaded = false;
 	
 	//attack defaults to the up arrow key
-	protected int attackButton = 38;
+	private int attackButton = 38;
 	//left, right, and down buttons default to their respective arrow keys
-	protected int leftButton = 37;
-	protected int rightButton = 39;
-	protected int downButton = 40;
+	private int leftButton = 37;
+	private int rightButton = 39;
+	private int downButton = 40;
 	
-	protected double centerX = 0;
-	protected double centerY = 0;
-	protected double height = 200;
-	protected double width = 200;
-	protected boolean dispose = false;
-	protected boolean isAtExit = false;
-	protected static String proximityMessage;
-	protected int player;
+	private double centerX = 0;
+	private double centerY = 0;
+	private double height = 200;
+	private double width = 200;
+	private boolean dispose = false;
+	private boolean isAtExit = false;
+	private static String proximityMessage;
+	private int player;
 	
 //	protected String imageFolder = null;
 	
-	protected double velocityX = 0;
-	protected double velocityY = 0;
-	protected double revolutions;
-	protected long score =  0;
-	protected int health = 5;
+	private double velocityX = 0;
+	private double velocityY = 0;
+	private double revolutions;
+	private long score =  0;
+	private int health = 5;
 	
 	//these variables detail how many frames each State should take to complete
 	//changing these constants will change the length of each state
@@ -52,9 +52,10 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private final int DOWN_FRAMES = 4;
 	//certain player states like attacking and blocking have to last a certain amount of time. 
 	//if a player attacks and misses the other player should be given an opportunity to respond, this is one of the core mechanics within all fighting games
-	
 	//an action like crouching does not need to have any time limit, however attacking necessarily does need a limit
-
+	
+	
+	
 	
 	protected State state = State.IDLE;
 	protected enum State { IDLE(0), MOVE(1), DEFFEND(2), ATTACK(3);
@@ -269,7 +270,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			state = State.DEFFEND;
 		}
 		else if (keyboard.keyDown(attackButton)) {
-			state = State.ATTACK;
+		//	state = State.ATTACK;
 		}
 		else {
 			state = State.IDLE;
