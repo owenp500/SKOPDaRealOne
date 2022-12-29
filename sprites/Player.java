@@ -53,6 +53,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	//certain player states like attacking and blocking have to last a certain amount of time. 
 	//if a player attacks and misses the other player should be given an opportunity to respond, this is one of the core mechanics within all fighting games
 	//an action like crouching does not need to have any time limit, however attacking necessarily does need a limit
+	private BoxSprite hurtBox = null;
 	
 	
 	
@@ -237,7 +238,9 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 				
 		return colliding;		
 	}
-	
+	public BoxSprite getHurtBox() {
+		return hurtBox;
+	}
 	public long getScore() {
 		return score;
 	}
@@ -248,7 +251,9 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public boolean getIsAtExit() {
 		return isAtExit;
 	}
-	
+	public void attack() {
+		
+	}
 	
 	//TODO! start of update function 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
@@ -266,11 +271,12 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 				state = State.MOVE;
 			}
 		}
-		else if (keyboard.keyDown(downButton)) { //temporary placement key for simple defend
+		/*else if (keyboard.keyDown(downButton)) { //temporary placement key for simple defend
 			state = State.DEFFEND;
-		}
+		}*/
 		else if (keyboard.keyDown(attackButton)) {
 		//	state = State.ATTACK;
+			
 		}
 		else {
 			state = State.IDLE;
@@ -291,7 +297,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 					
 		elapsedTime +=  actual_delta_time;
 		this.elapsedFrames ++;
-		currentFrame = (int) Math.abs(this.elapsedFrames % FRAMES);		
+		currentFrame = (int) this.elapsedFrames % FRAMES;		
 		
 	}
 	//TODO! end of update function!
