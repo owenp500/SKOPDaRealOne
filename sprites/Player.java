@@ -46,7 +46,8 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	
 	//these variables detail how many frames each State should take to complete
 	//changing these constants will change the length of each state
-	private final int ATTACK_FRAMES = 4;
+	private final int ATTACK_FRAMES = 12;
+	private double startOfAttackFrame;
 	private final int DEFEND_FRAMES = 4; 
 	private final int HIT_FRAMES = 4;
 	private final int DOWN_FRAMES = 4;
@@ -56,10 +57,12 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private BoxSprite hurtBox = null;
 	
 	
+	private double endStunFrame; 
+	
 	
 	
 	protected State state = State.IDLE;
-	protected enum State { IDLE(0), MOVE(1), DEFFEND(2), ATTACK(3);
+	protected enum State { IDLE(0), MOVE(1), DEFFEND(2), ATTACK(3), STUN(4);
 		private int value = 0;
 		private State(int value) {
 			this.value = value;
@@ -102,11 +105,19 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		this.player = player;
 	}
 	
-	public Image getImage() {	
-		long period = elapsedTime / PERIOD_LENGTH;
-		int frame = (int) (period % FRAMES);
-		int index = state.value * FRAMES + frame;
-		return frames[index];
+	public Image getImage() {
+		
+		
+		//you can add whatever states that don't yet have animations into this if statement
+		//TODO! delete these comments 
+		if (state!= State.ATTACK && state != State.STUN) {
+			long period = elapsedTime / PERIOD_LENGTH;
+			int frame = (int) (period % FRAMES);
+			int index = state.value * FRAMES + frame;
+			return frames[index];
+		}
+		else { return frames[0]; }
+
 		
 	}
 	
@@ -258,29 +269,47 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	//TODO! start of update function 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		velocityX -= velocityX/8;
-
-		if (keyboard.keyDown(leftButton)) {
-			if (velocityX>= -100) {
-			velocityX -= 40; 
-			state = State.MOVE;
+		
+		
+		switch (state) 
+		{
+		case ATTACK:
+			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES) {
+				state = state.IDLE;
 			}
-		}
-		else if (keyboard.keyDown(rightButton)) {
-			if(velocityX <= 100) {
-				velocityX += 40;
-				state = State.MOVE;
-			}
-		}
-		/*else if (keyboard.keyDown(downButton)) { //temporary placement key for simple defend
-			state = State.DEFFEND;
-		}*/
-		else if (keyboard.keyDown(attackButton)) {
-		//	state = State.ATTACK;
+			break;
+		case DEFFEND:
+			break;
+		case STUN:
 			
+			break;
+			//these actions can only be performed in the IDLE or MOVE states
+		default:
+			if (keyboard.keyDown(attackButton)) {
+				state = State.ATTACK;
+				velocityX = 0;
+			    startOfAttackFrame = elapsedFrames;
+			}
+			else if (keyboard.keyDown(rightButton)) {
+				if(velocityX <= 100) {
+					velocityX += 40;
+					state = State.MOVE;
+				}
+			}
+			else if (keyboard.keyDown(leftButton)) {
+				if (velocityX>= -100) {
+				velocityX -= 40; 
+				state = State.MOVE;
+				}
+			} 
+			else {
+				state = State.IDLE;
+			}
+			break;				
 		}
-		else {
-			state = State.IDLE;
-		}
+		
+		
+		
 		
 
 		double deltaX = actual_delta_time * 0.001 * velocityX;
@@ -291,14 +320,20 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		if (collidingBarrierX || collidingPlayer) {
 			velocityX  = 0;
 		}
-		if (collidingBarrierX == false) {
-			this.centerX += actual_delta_time * 0.001 * velocityX;
-		}
-					
+		
+		this.centerX += actual_delta_time * 0.001 * velocityX;
+		
 		elapsedTime +=  actual_delta_time;
 		this.elapsedFrames ++;
-		currentFrame = (int) this.elapsedFrames % FRAMES;		
+		currentFrame = (int) this.elapsedFrames % FRAMES;																													
 		
+		//TODO! little bit of debug printing ;)
+		
+		String attackString = (state == State.ATTACK) ? "attacking": "no";
+		if( state == state.STUN) {
+			attackString = "stun"; 
+		}
+		System.out.printf("\n %s",attackString);
 	}
 	//TODO! end of update function!
 }
