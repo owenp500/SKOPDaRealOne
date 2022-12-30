@@ -125,6 +125,7 @@ public class GameUniverse implements Universe {
 		else { return x;}
 	}
 	
+	
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
 		
 		/*					*
@@ -137,7 +138,8 @@ public class GameUniverse implements Universe {
 			complete = true;
 		}
 		
-		disposeSprites();
+		
+		disposeSprites(); 
 
 		for (int i = 0; i < sprites.size(); i++) {
 			DisplayableSprite sprite = sprites.get(i);
@@ -184,6 +186,6 @@ public class GameUniverse implements Universe {
 
 	public String toString() {
 		return String.format("");
-	}	
-
+	}
 }
+
