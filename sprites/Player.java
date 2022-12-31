@@ -265,6 +265,11 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public void attack() {
 		
 	}
+	public void stun(int length) {
+		state = state.STUN;
+		endStunFrame = elapsedFrames + 4;
+	}
+	
 	
 	//TODO! start of update function 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
@@ -274,14 +279,18 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		switch (state) 
 		{
 		case ATTACK:
+			hurtBox = new BoxSprite(50,50,centerX - 50);
 			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES) {
-				state = state.IDLE;
+				stun(3);
+				hurtBox.setDispose(true);
 			}
 			break;
 		case DEFFEND:
 			break;
 		case STUN:
-			
+			if(elapsedFrames >= endStunFrame) {
+				state =  state.IDLE;
+			}
 			break;
 			//these actions can only be performed in the IDLE or MOVE states
 		default:
