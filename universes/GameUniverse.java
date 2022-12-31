@@ -137,7 +137,9 @@ public class GameUniverse implements Universe {
 		if (keyboard.keyDownOnce(27)) {
 			complete = true;
 		}
-		
+		if(Player2.getHurtBox() != null) {
+			
+		}
 		
 		disposeSprites(); 
 
@@ -147,7 +149,7 @@ public class GameUniverse implements Universe {
     	}
 
 		this.background.setShiftX(camera.getCenterX() * 0.85); 
-//		this.background.setShiftY(camera.getCenterY() * 1 + 540);
+//		this.background.seftShiftY(camera.getCenterY() * 1 + 540);
 		
 		
 		this.middleground.setShiftX(camera.getCenterX() * 0.45);
