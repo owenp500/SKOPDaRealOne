@@ -27,7 +27,11 @@ public class GameUniverse implements Universe {
 	 *					*/
 	private DisplayableSprite camera = null;
 	private DisplayableSprite player1 = null;
+	private DisplayableSprite hurtBox1 = null;
+	
 	private DisplayableSprite player2 = null;
+	private DisplayableSprite hurtBox2 = null;
+	
 
 	/*					*
 	 * Barrier blocks 	*
@@ -48,11 +52,14 @@ public class GameUniverse implements Universe {
 		//ADD BARRIER
 		BarrierSprite barrier1 =  new BarrierSprite(0,0,5,450,false, -700,360);
 		BarrierSprite barrier2 = new BarrierSprite(0,0,5,450,false, 700,360);
-
+			
 		//ADD SPRITES
 		camera = new Camera(17,216,100,100);
 		player1 = new Player1(-351,351, "Doug's Sprites");
 		player2 = new Player2(351,351, "Phil's Sprites");
+		
+		sprites.add(player1.getHurtBox());
+		sprites.add(player2.getHurtBox());
 		sprites.add(camera); sprites.add(player1); sprites.add(player2); 
 		sprites.add(barrier1); 
 		sprites.add(barrier2); 
@@ -137,9 +144,8 @@ public class GameUniverse implements Universe {
 		if (keyboard.keyDownOnce(27)) {
 			complete = true;
 		}
-		if(Player2.getHurtBox() != null) {
-			
-		}
+		
+		
 		
 		disposeSprites(); 
 
@@ -161,7 +167,9 @@ public class GameUniverse implements Universe {
 	}
 	
 	 protected void disposeSprites() {
-	      
+	      	
+		 	
+		 
 	    	//collect a list of sprites to dispose
 	    	//this is done in a temporary list to avoid a concurrent modification exception
 			for (int i = 0; i < sprites.size(); i++) {

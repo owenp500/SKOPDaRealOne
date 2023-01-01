@@ -434,5 +434,11 @@ public class SaniruSprite implements DisplayableSprite, MovableSprite, Health{
 	public void setDontMove(boolean DontMove) {
 	}
 
+	@Override
+	public BoxSprite getHurtBox() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

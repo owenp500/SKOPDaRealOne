@@ -28,6 +28,9 @@ public interface DisplayableSprite {
 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time);
 
+	public BoxSprite getHurtBox();
+
+
 
 	
 }

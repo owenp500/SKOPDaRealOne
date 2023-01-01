@@ -327,4 +327,9 @@ public class SawSprite implements DisplayableSprite, MovableSprite, CollidingSpr
 		
 	}
 	//TODO! end of update function!
+	@Override
+	public BoxSprite getHurtBox() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

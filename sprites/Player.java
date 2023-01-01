@@ -54,9 +54,11 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	//certain player states like attacking and blocking have to last a certain amount of time. 
 	//if a player attacks and misses the other player should be given an opportunity to respond, this is one of the core mechanics within all fighting games
 	//an action like crouching does not need to have any time limit, however attacking necessarily does need a limit
-	private BoxSprite hurtBox = null;
+	private BoxSprite hurtBox = new BoxSprite(50,50,0);
+	private int hurtBoxOffset = 0;
 	
 	
+	private ArrayList<DisplayableSprite> sprites;
 	private double endStunFrame; 
 	
 	
@@ -74,7 +76,8 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		
 		this.centerX = centerX;
 		this.centerY = centerY;
-		
+	
+		hurtBoxOffset = (facingRight) ? 50: -50;
 		if (framesLoaded == false) {
 			
 			frames = new Image[12];

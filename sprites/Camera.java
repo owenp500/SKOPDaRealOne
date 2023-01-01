@@ -126,4 +126,11 @@ public class Camera implements DisplayableSprite {
 		this.dispose = true;
 	}
 
+
+	@Override
+	public BoxSprite getHurtBox() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

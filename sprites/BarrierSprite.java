@@ -3,6 +3,7 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
+import javax.swing.Box;
 
 public class BarrierSprite implements DisplayableSprite {
 
@@ -105,6 +106,13 @@ public class BarrierSprite implements DisplayableSprite {
 	public double getFacingDirection() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+
+	@Override
+	public BoxSprite getHurtBox() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

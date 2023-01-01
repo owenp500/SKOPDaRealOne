@@ -61,18 +61,20 @@ public class BoxSprite implements DisplayableSprite{
 	public double getHeight() {
 		return height;
 	}
-
+	public BoxSprite getHurtBox() {
+		return null;
+	}
 	public double getWidth() {
 		return width;
 	}
 
 	public double getCenterX() {
 		return centerX;
-	};
+	}
 
 	public double getCenterY() {
 		return centerY;
-	};
+	}
 	
 	
 	public boolean getDispose() {
@@ -86,12 +88,12 @@ public class BoxSprite implements DisplayableSprite{
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		
 	}
-
+	
 	public boolean isHit(boolean b) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
 
 	public void setDontMove(boolean DontMove) {
 	}

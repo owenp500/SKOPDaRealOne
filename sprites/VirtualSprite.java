@@ -80,5 +80,11 @@ public class VirtualSprite implements DisplayableSprite {
 	public void setDispose(boolean dispose) {
 		//ignore		
 	}
+
+	@Override
+	public BoxSprite getHurtBox() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
