@@ -42,7 +42,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private double velocityY = 0;
 	private double revolutions;
 	private long score =  0;
-	private int health = 5;
+	private int health = 0;
 	
 	//these variables detail how many frames each State should take to complete
 	//changing these constants will change the length of each state
@@ -77,6 +77,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		
 		this.centerX = centerX;
 		this.centerY = centerY;
+		this.health = 5;
 	
 		hurtBoxOffset = (facingRight) ? 50: -50;
 		if (framesLoaded == false) {
@@ -197,9 +198,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		
 		return dispose;
 	}
-	public int getHealth() {
-		return health;
-	}
+
 
 	
 	public void setDispose(boolean dispose) {
@@ -272,6 +271,14 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public void stun(int length) {
 		state = state.STUN;
 		endStunFrame = elapsedFrames + 4;
+	}
+	
+	public int getHealth() {
+		return health;
+	}
+	
+	public void setHealth(int dmg) {
+		health -= dmg;
 	}
 	
 	

@@ -2,7 +2,6 @@ import java.security.Principal;
 import java.util.ArrayList;
 
 
-
 public class GameUniverse implements Universe {
 	
 	private boolean complete = false;
@@ -105,6 +104,9 @@ public class GameUniverse implements Universe {
 	public DisplayableSprite getPlayer1() {
 		return player1;
 	}
+	public DisplayableSprite getPlayer2() {
+		return player1;
+	}
 	public DisplayableSprite getCamera() {
 		return camera;
 	}
@@ -155,14 +157,10 @@ public class GameUniverse implements Universe {
     	}
 
 		this.background.setShiftX(camera.getCenterX() * 0.85); 
-//		this.background.seftShiftY(camera.getCenterY() * 1 + 540);
-		
 		
 		this.middleground.setShiftX(camera.getCenterX() * 0.45);
-//		this.middleground.setShiftY(camera.getCenterY() * 1 + 540);
-		
+
 		this.foreground.setShiftX(camera.getCenterX() * 0.10); 
-//		this.foreground.setShiftY(camera.getCenterY() * 1 + 540);
 
 	}
 	
