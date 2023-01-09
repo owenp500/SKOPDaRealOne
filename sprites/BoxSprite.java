@@ -75,8 +75,12 @@ public class BoxSprite implements DisplayableSprite{
 	public double getCenterY() {
 		return centerY;
 	}
-	
-	
+	public void setCenterX(double x) {
+		centerX = x;
+	}
+	public void setCenterY(double y) {
+		centerY = y;
+	}
 	public boolean getDispose() {
 		return dispose;
 	}

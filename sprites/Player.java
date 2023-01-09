@@ -77,7 +77,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		this.centerX = centerX;
 		this.centerY = centerY;
 	
-		hurtBoxOffset = (facingRight) ? 50: -50;
+		
 		if (framesLoaded == false) {
 			
 			frames = new Image[12];
@@ -282,10 +282,12 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		switch (state) 
 		{
 		case ATTACK:
-			hurtBox = new BoxSprite(50,50,centerX - 50);
+			hurtBox.setCenterX(centerX + 50);
+			hurtBox.setCenterY(this.centerY);
 			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES) {
 				stun(3);
-				hurtBox.setDispose(true);
+				hurtBox.setCenterX(centerX);
+				hurtBox.setCenterY(this.centerY - 400);
 			}
 			break;
 		case DEFFEND:
@@ -317,8 +319,10 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			else {
 				state = State.IDLE;
 			}
+			hurtBox.setCenterX(centerX + hurtBoxOffset);
 			break;				
 		}
+		
 		
 		
 		
