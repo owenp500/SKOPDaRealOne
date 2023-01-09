@@ -65,6 +65,16 @@ public class ShellUniverse implements Universe {
 	public DisplayableSprite getPlayer1() {
 		return player1;
 	}
+	
+	public DisplayableSprite getCamera() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public DisplayableSprite getPlayer2() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	public ArrayList<DisplayableSprite> getSprites() {
 		return sprites;
@@ -94,10 +104,6 @@ public class ShellUniverse implements Universe {
 		return "ShellUniverse";
 	}
 
-	@Override
-	public DisplayableSprite getCamera() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
 
 }

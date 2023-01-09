@@ -25,9 +25,9 @@ public class AnimationFrame extends JFrame {
 	private double logicalCenterY = 0;
 
 	private JPanel panel = null;
-	private JButton btnPauseRun;
-	private JLabel lblTop;
-	private JLabel lblBottom;
+	private JButton buttonPauseRun;
+	private JLabel lableHealth;
+	private JLabel lableHealth2;
 
 	private static boolean stop = false;
 
@@ -45,6 +45,7 @@ public class AnimationFrame extends JFrame {
 	//local (and direct references to various objects in universe ... should reduce lag by avoiding dynamic lookup
 	private Animation animation = null;
 	private DisplayableSprite player1 = null;
+	private DisplayableSprite player2 = null;
 	private DisplayableSprite camera = null;
 	private ArrayList<DisplayableSprite> sprites = null;
 	private ArrayList<Background> backgrounds = null;
@@ -94,34 +95,33 @@ public class AnimationFrame extends JFrame {
 		panel.setSize(SCREEN_WIDTH, SCREEN_HEIGHT);
 		getContentPane().add(panel, BorderLayout.CENTER);
 
-		btnPauseRun = new JButton("||");
-		btnPauseRun.addMouseListener(new MouseAdapter() {
+		buttonPauseRun = new JButton("||");
+		buttonPauseRun.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
 				btnPauseRun_mouseClicked(arg0);
 			}
 		});
 
-		btnPauseRun.setFont(new Font("SansSerif", Font.BOLD, 12));
-		btnPauseRun.setBounds(SCREEN_WIDTH - 64, 20, 48, 32);
-		btnPauseRun.setFocusable(false);
-		getContentPane().add(btnPauseRun);
-		getContentPane().setComponentZOrder(btnPauseRun, 0);
+		buttonPauseRun.setFont(new Font("SansSerif", Font.BOLD, 12));
+		buttonPauseRun.setBounds(SCREEN_WIDTH - 64, 20, 48, 32);
+		buttonPauseRun.setFocusable(false);
+		getContentPane().add(buttonPauseRun);
+		getContentPane().setComponentZOrder(buttonPauseRun, 0);
 
-		lblTop = new JLabel("HEALTH: ");
-		lblTop.setForeground(Color.RED);
-		lblTop.setFont(new Font("Consolas", Font.BOLD, 20));
-		lblTop.setBounds(16, 22, SCREEN_WIDTH - 16, 30);
-		getContentPane().add(lblTop);
-		getContentPane().setComponentZOrder(lblTop, 0);
+		lableHealth = new JLabel("");
+		lableHealth.setForeground(Color.BLUE);
+		lableHealth.setFont(new Font("Monospaced", Font.BOLD, 20));
+		lableHealth.setBounds(400, 45, SCREEN_WIDTH, 60);
+		getContentPane().add(lableHealth);
+		getContentPane().setComponentZOrder(lableHealth, 0);
 
-//		lblBottom = new JLabel("Status");
-//		lblBottom.setForeground(Color.BLACK);
-//		lblBottom.setFont(new Font("Consolas", Font.BOLD, 30));
-//		lblBottom.setBounds(16, SCREEN_HEIGHT - 30 - 16, SCREEN_WIDTH - 16, 36);
-//		lblBottom.setHorizontalAlignment(SwingConstants.CENTER);
-//		getContentPane().add(lblBottom);
-//		getContentPane().setComponentZOrder(lblBottom, 0);
+		lableHealth2 = new JLabel("");
+		lableHealth2.setForeground(Color.RED);
+		lableHealth2.setFont(new Font("Monospaced", Font.BOLD, 20));
+		lableHealth2.setBounds(800, 45, SCREEN_WIDTH, 60);
+		getContentPane().add(lableHealth2);
+		getContentPane().setComponentZOrder(lableHealth2, 0);
 
 	}
 
@@ -149,6 +149,7 @@ public class AnimationFrame extends JFrame {
 
 			sprites = universe.getSprites();
 			player1 = universe.getPlayer1();
+			player2 = universe.getPlayer2();
 			camera = universe.getCamera();
 			backgrounds = universe.getBackgrounds();
 			centreOnPlayer = universe.centerOnPlayer();
@@ -210,9 +211,15 @@ public class AnimationFrame extends JFrame {
 		dispose();	
 
 	}
-
+	
 	private void updateControls() {
-		this.lblTop.setText(String.format("Health: %d", ((Player) player1).getHealth()));
+		
+		double player1Hp = (((Player1) player1).getHealth() / 5.0) * 100;
+		//double player2Hp = (((Player2) player2).getHealth() / 5.0) * 100;
+		
+		
+		this.lableHealth.setText(String.format("PLAYER ONE: %d%%", (int) player1Hp));
+		//this.lableHealth2.setText(String.format("PLAYER TWO: %d%%", (int) player2Hp));
 //		this.lblTop.setText(String.format("Time: %9.3f;  centerX: %5d; centerY: %5d;  scale: %3.3f", elapsed_time / 1000.0, screenCenterX, screenCenterY, scale));
 //		this.lblBottom.setText(Integer.toString(universeLevel));
 //		if (universe != null) {
@@ -233,15 +240,17 @@ public class AnimationFrame extends JFrame {
 	protected void btnPauseRun_mouseClicked(MouseEvent arg0) {
 		if (isPaused) {
 			isPaused = false;
-			this.btnPauseRun.setText("||");
+			this.buttonPauseRun.setText("||");
 		}
 		else {
 			isPaused = true;
-			this.btnPauseRun.setText(">");
+			this.buttonPauseRun.setText(">");
 		}
 	}
 
 	private void handleKeyboardInput() {
+		
+		
 		
 		if (keyboard.keyDown(80) && ! isPaused) {
 			btnPauseRun_mouseClicked(null);	
@@ -267,6 +276,12 @@ public class AnimationFrame extends JFrame {
 		}
 		if (keyboard.keyDown(88)) {
 			screenCenterY += 1;
+		}
+		
+		
+		//TEMP TEST BUTTON
+		if (keyboard.keyDown(70)) {
+			((Player1) player1).setHealth(1);
 		}
 		
 	}

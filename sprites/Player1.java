@@ -1,5 +1,7 @@
 
 public class Player1 extends Player {
+	
+	public int health = 5;
 
 	public Player1(int centerX, int centerY, String imageFolder) {
 		
@@ -11,5 +13,16 @@ public class Player1 extends Player {
 		
 		//assigns whether the player is 'player1' or player'1'
 		super.setPlayer(1);
+		
 	}
+
+	
+	public int getHealth() {
+		return health;
+	}
+	
+	public void setHealth(int dmg) {
+		health -= dmg;
+	}
+
 }

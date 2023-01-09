@@ -20,12 +20,16 @@ public interface Universe {
 	
 	public DisplayableSprite getCamera();
 	public DisplayableSprite getPlayer1();
+	public DisplayableSprite getPlayer2();
 	public boolean centerOnPlayer();
 
 	public ArrayList<DisplayableSprite> getSprites();	
 	public ArrayList<Background> getBackgrounds();		
 
 	public void update(KeyboardInput keyboard, long actual_delta_time);
+
+
+	
 
 
     

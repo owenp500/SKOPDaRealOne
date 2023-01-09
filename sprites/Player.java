@@ -42,7 +42,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private double velocityY = 0;
 	private double revolutions;
 	private long score =  0;
-	private int health = 5;
+	private int health = 0;
 	
 	//these variables detail how many frames each State should take to complete
 	//changing these constants will change the length of each state
@@ -61,10 +61,11 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private ArrayList<DisplayableSprite> sprites;
 	private double endStunFrame; 
 	
-	
+	// THE ORDER OF THE ANIMATIONS IN THE FOLDER
+	// Idle(0); Move(1); Defend(2); LowIdle(3); LowBlock(4); LowAttack(5); Stun(6); Attack(7)
 	
 	protected State state = State.IDLE;
-	protected enum State { IDLE(0), MOVE(1), DEFFEND(2), ATTACK(3), STUN(4);
+	protected enum State { IDLE(0), MOVE(1), DEFEND(2), LOWIDLE(3), ATTACK(7), STUN(6);
 		private int value = 0;
 		private State(int value) {
 			this.value = value;
@@ -76,12 +77,13 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		
 		this.centerX = centerX;
 		this.centerY = centerY;
+		this.health = 5;
 	
 		
 		if (framesLoaded == false) {
 			
-			frames = new Image[12];
-			for (int frame = 0; frame < 12; frame++) {
+			frames = new Image[32];
+			for (int frame = 0; frame < 32; frame++) {
 				String filename = String.format("res/%s/DougTheAdventurer%d.png" , imageFolder,frame+1);
 				
 				try {
@@ -196,9 +198,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		
 		return dispose;
 	}
-	public int getHealth() {
-		return health;
-	}
+
 
 	
 	public void setDispose(boolean dispose) {
@@ -273,6 +273,14 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		endStunFrame = elapsedFrames + 4;
 	}
 	
+	public int getHealth() {
+		return health;
+	}
+	
+	public void setHealth(int dmg) {
+		health -= dmg;
+	}
+	
 	
 	//TODO! start of update function 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
@@ -290,7 +298,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 				hurtBox.setCenterY(this.centerY - 400);
 			}
 			break;
-		case DEFFEND:
+		case DEFEND:
 			break;
 		case STUN:
 			if(elapsedFrames >= endStunFrame) {
@@ -315,6 +323,9 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 				velocityX -= 40; 
 				state = State.MOVE;
 				}
+			} 
+			else if (keyboard.keyDown(downButton)) {
+				state = State.LOWIDLE;
 			} 
 			else {
 				state = State.IDLE;

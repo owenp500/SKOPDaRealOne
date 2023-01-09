@@ -30,7 +30,7 @@ public class BoxSprite implements DisplayableSprite{
 			}		
 		}
 	}
-	public Image getImage() {
+	public Image getImage() { 
 		return image;
 	}
 	
