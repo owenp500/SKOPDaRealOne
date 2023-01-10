@@ -105,7 +105,7 @@ public class GameUniverse implements Universe {
 		return player1;
 	}
 	public DisplayableSprite getPlayer2() {
-		return player1;
+		return player2;
 	}
 	public DisplayableSprite getCamera() {
 		return camera;
@@ -137,6 +137,9 @@ public class GameUniverse implements Universe {
 	
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
 		
+		
+		
+		
 		/*					*
 		 * Sets Camera POS.	*
 		 *					*/
@@ -148,6 +151,12 @@ public class GameUniverse implements Universe {
 		}
 		
 		
+		/*					*
+		 * Dispose Player.	*
+		 *					*/
+		if (((Player)player1).getHealth() <= 0) {
+			player1.setDispose(true);
+		}
 		
 		disposeSprites(); 
 
@@ -166,7 +175,7 @@ public class GameUniverse implements Universe {
 	
 	 protected void disposeSprites() {
 	      	
-		 	
+
 		 
 	    	//collect a list of sprites to dispose
 	    	//this is done in a temporary list to avoid a concurrent modification exception

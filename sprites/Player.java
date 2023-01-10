@@ -17,8 +17,8 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 
 	private final static int FRAMES = 4;
 
-	private static Image[] frames = new Image[FRAMES];
-	private static boolean framesLoaded = false;
+	private  Image[] frames = new Image[FRAMES];
+//	private static boolean framesLoaded = false;
 	
 	//attack defaults to the up arrow key
 	private int attackButton = 38;
@@ -80,10 +80,10 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		this.health = 5;
 	
 		hurtBoxOffset = (facingRight) ? 50: -50;
-		if (framesLoaded == false) {
+//		if (framesLoaded == false) {
 			
-			frames = new Image[32];
-			for (int frame = 0; frame < 32; frame++) {
+			frames = new Image[12];
+			for (int frame = 0; frame < 12; frame++) {
 				String filename = String.format("res/%s/DougTheAdventurer%d.png" , imageFolder,frame+1);
 				
 				try {
@@ -94,10 +94,10 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 				}		
 			}
 			
-			if (frames[0] != null) {
-				framesLoaded = true;
-			}
-		}		
+//			if (frames[0] != null) {
+//				framesLoaded = true;
+//			}
+//		}		
 	}
 	public void setKeys(int attack, int left, int right, int down) {
 		attackButton = attack;
@@ -322,9 +322,9 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 				state = State.MOVE;
 				}
 			} 
-			else if (keyboard.keyDown(downButton)) {
-				state = State.LOWIDLE;
-			} 
+//			else if (keyboard.keyDown(downButton)) {
+//				state = State.LOWIDLE;
+//			} 
 			else {
 				state = State.IDLE;
 			}

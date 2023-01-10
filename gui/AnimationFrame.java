@@ -124,6 +124,11 @@ public class AnimationFrame extends JFrame {
 		getContentPane().setComponentZOrder(lableHealth2, 0);
 
 	}
+	
+	
+	public double limit(double value) {
+	    return Math.max(0, Math.min(value, 100));
+	}
 
 	public void start()
 	{
@@ -214,12 +219,11 @@ public class AnimationFrame extends JFrame {
 	
 	private void updateControls() {
 		
-		double player1Hp = (((Player1) player1).getHealth() / 5.0) * 100;
-		//double player2Hp = (((Player2) player2).getHealth() / 5.0) * 100;
-		
-		
-		this.lableHealth.setText(String.format("PLAYER ONE: %d%%", (int) player1Hp));
-		//this.lableHealth2.setText(String.format("PLAYER TWO: %d%%", (int) player2Hp));
+		double player1Hp = (((Player) player1).getHealth() / 5.0) * 100;
+		double player2Hp = (((Player) player2).getHealth() / 5.0) * 100;
+
+		this.lableHealth.setText(String.format("PLAYER ONE: %d%%", (int) limit(player1Hp)));
+		this.lableHealth2.setText(String.format("PLAYER TWO: %d%%", (int) limit(player2Hp)));
 //		this.lblTop.setText(String.format("Time: %9.3f;  centerX: %5d; centerY: %5d;  scale: %3.3f", elapsed_time / 1000.0, screenCenterX, screenCenterY, scale));
 //		this.lblBottom.setText(Integer.toString(universeLevel));
 //		if (universe != null) {
