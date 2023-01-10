@@ -28,6 +28,7 @@ public class AnimationFrame extends JFrame {
 	private JButton buttonPauseRun;
 	private JLabel lableHealth;
 	private JLabel lableHealth2;
+	private JLabel lableBotom;
 
 	private static boolean stop = false;
 
@@ -122,6 +123,13 @@ public class AnimationFrame extends JFrame {
 		lableHealth2.setBounds(800, 45, SCREEN_WIDTH, 60);
 		getContentPane().add(lableHealth2);
 		getContentPane().setComponentZOrder(lableHealth2, 0);
+		
+		lableBotom = new JLabel("", SwingConstants.CENTER);
+		lableBotom.setForeground(Color.PINK);
+		lableBotom.setFont(new Font("SansSerif", Font.BOLD, 40));
+		lableBotom.setBounds(SCREEN_WIDTH/2 -200, 45, 400, 1200);
+		getContentPane().add(lableBotom);
+		getContentPane().setComponentZOrder(lableBotom, 0);
 
 	}
 	
@@ -224,6 +232,13 @@ public class AnimationFrame extends JFrame {
 
 		this.lableHealth.setText(String.format("PLAYER ONE: %d%%", (int) limit(player1Hp)));
 		this.lableHealth2.setText(String.format("PLAYER TWO: %d%%", (int) limit(player2Hp)));
+		
+		if (player2Hp <= 0) {
+			this.lableBotom.setText(String.format("PLAYER ONE WINS"));
+		}
+		else if (player1Hp <= 0) {
+			this.lableBotom.setText(String.format("PLAYER TWO WINS"));
+		}
 //		this.lblTop.setText(String.format("Time: %9.3f;  centerX: %5d; centerY: %5d;  scale: %3.3f", elapsed_time / 1000.0, screenCenterX, screenCenterY, scale));
 //		this.lblBottom.setText(Integer.toString(universeLevel));
 //		if (universe != null) {
@@ -285,7 +300,7 @@ public class AnimationFrame extends JFrame {
 		
 		//TEMP TEST BUTTON
 		if (keyboard.keyDown(70)) {
-			((Player1) player1).setHealth(1);
+			((Player2) player2).setHealth(1);
 		}
 		
 	}

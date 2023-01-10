@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class GameUniverse implements Universe {
 	
+	private boolean winner = false;
+	
 	private boolean complete = false;
 	private double xCenter;
 	private double yCenter;
@@ -143,19 +145,33 @@ public class GameUniverse implements Universe {
 		/*					*
 		 * Sets Camera POS.	*
 		 *					*/
-		double averageX = (player1.getCenterX() + player2.getCenterX() )/ 2;
-		((Camera) camera).setCenterX(averageX);
-
-		if (keyboard.keyDownOnce(27)) {
-			complete = true;
+		if (winner == false) {
+			double averageX = (player1.getCenterX() + player2.getCenterX() )/ 2;
+			((Camera) camera).setCenterX(averageX);
+		}
+		else {
+			if (player1.getDispose()) {
+				((Camera) camera).setCenterX(player2.getCenterX());
+			}
+			else {
+				((Camera) camera).setCenterX(player1.getCenterX());
+			}
+			
+			
 		}
 		
 		
 		/*					*
 		 * Dispose Player.	*
 		 *					*/
+		if (((Player)player2).getHealth() <= 0) {
+			player2.setDispose(true);
+			winner = true;
+		}
+		
 		if (((Player)player1).getHealth() <= 0) {
 			player1.setDispose(true);
+			winner = true;
 		}
 		
 		disposeSprites(); 
