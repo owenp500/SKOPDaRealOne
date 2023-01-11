@@ -65,12 +65,6 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	// Idle(0); Move(1); Defend(2); LowIdle(3); LowBlock(4); LowAttack(5); Stun(6); Attack(7)
 	
 	protected State state = State.IDLE;
-	protected enum State { IDLE(0), MOVE(1), DEFEND(2), LOWIDLE(3), ATTACK(7), STUN(6);
-		private int value = 0;
-		private State(int value) {
-			this.value = value;
-		}
-	};
 	
 	
 	public Player(int centerX, int centerY, String imageFolder) { 
@@ -115,13 +109,13 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		
 		//you can add whatever states that don't yet have animations into this if statement
 		//TODO! delete these comments 
-		if (state!= State.ATTACK && state != State.STUN) {
-			long period = elapsedTime / PERIOD_LENGTH;
-			int frame = (int) (period % FRAMES);
-			int index = state.value * FRAMES + frame;
-			return frames[index];
-		}
-		else { return frames[0]; }
+		
+		long period = elapsedTime / PERIOD_LENGTH;
+		int frame = (int) (period % FRAMES);
+		int index = state.value * FRAMES + frame;
+		return frames[index];
+	
+		
 
 		
 	}
@@ -268,9 +262,52 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public void attack() {
 		
 	}
+	
+	public State getState() {
+		return state;
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	public void stun(int length) {
 		state = state.STUN;
-		endStunFrame = elapsedFrames + 4;
+		endStunFrame = elapsedFrames + 16;
 	}
 	
 	public int getHealth() {

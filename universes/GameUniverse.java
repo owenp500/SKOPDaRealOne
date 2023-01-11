@@ -139,6 +139,11 @@ public class GameUniverse implements Universe {
 	
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
 		
+		if(((Player) player1).getState() == State.ATTACK || ((Player) player2).getState() == State.ATTACK) {
+			//check collision of hurtboxes
+			
+		}
+		
 
 		/*					*
 		 * Sets Camera POS.	*
