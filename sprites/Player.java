@@ -78,16 +78,12 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		this.centerX = centerX;
 		this.centerY = centerY;
 		this.health = 5;
-	
-
-		
-
 
 		hurtBoxOffset = (facingRight) ? 50: -50;
 //		if (framesLoaded == false) {
 			
-			frames = new Image[12];
-			for (int frame = 0; frame < 12; frame++) {
+			frames = new Image[32];
+			for (int frame = 0; frame < 32; frame++) {
 				String filename = String.format("res/%s/DougTheAdventurer%d.png" , imageFolder,frame+1);
 				
 				try {
@@ -328,9 +324,9 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 				state = State.MOVE;
 				}
 			} 
-//			else if (keyboard.keyDown(downButton)) {
-//				state = State.LOWIDLE;
-//			} 
+			else if (keyboard.keyDown(downButton)) {
+				state = State.LOWIDLE;
+			} 
 			else {
 				state = State.IDLE;
 			}

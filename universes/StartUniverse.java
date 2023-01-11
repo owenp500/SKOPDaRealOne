@@ -2,7 +2,7 @@ import java.security.Principal;
 import java.util.ArrayList;
 
 
-public class GameUniverse implements Universe {
+public class StartUniverse implements Universe {
 	
 	private boolean winner = false;
 	
@@ -41,7 +41,7 @@ public class GameUniverse implements Universe {
 	private DisplayableSprite wall = null;
 
 
-	public GameUniverse () {
+	public StartUniverse () {
 		//ADD BACKGROUNDS
 		background = new BackgroundBackground();
 		middleground = new MiddleBackground();
@@ -49,21 +49,21 @@ public class GameUniverse implements Universe {
 		backgrounds.add(middleground);
 		backgrounds.add(background);
 		backgrounds.add(foreground);
-		
-		//ADD BARRIER
-		BarrierSprite barrier1 =  new BarrierSprite(0,0,5,450,false, -700,360);
-		BarrierSprite barrier2 = new BarrierSprite(0,0,5,450,false, 700,360);
-			
-		//ADD SPRITES
-		camera = new Camera(17,216,100,100);
-		player1 = new Player1(-351,351, "Doug's Sprites");
-		player2 = new Player2(351,351, "Phil's Sprites");
-		
+//		
+//		//ADD BARRIER
+//		BarrierSprite barrier1 =  new BarrierSprite(0,0,5,450,false, -700,360);
+//		BarrierSprite barrier2 = new BarrierSprite(0,0,5,450,false, 700,360);
+//			
+//		//ADD SPRITES
+//		camera = new Camera(17,216,100,100);
+		player1 = new Player1(-351,100, "Doug's Sprites");
+		player2 = new Player2(351,100, "Phil's Sprites");
+//		
 		sprites.add(player1.getHurtBox());
 		sprites.add(player2.getHurtBox());
-		sprites.add(camera); sprites.add(player1); sprites.add(player2); 
-		sprites.add(barrier1); 
-		sprites.add(barrier2); 
+		sprites.add(player1); sprites.add(player2);
+//		sprites.add(barrier1); 
+//		sprites.add(barrier2); 
 
 	}
 
@@ -143,18 +143,18 @@ public class GameUniverse implements Universe {
 		/*					*
 		 * Sets Camera POS.	*
 		 *					*/
-		if (winner == false) {
-			double averageX = (player1.getCenterX() + player2.getCenterX() )/ 2;
-			((Camera) camera).setCenterX(averageX);
-		}
-		else {
-			if (player1.getDispose()) {
-				((Camera) camera).setCenterX(player2.getCenterX());
-			}
-			else {
-				((Camera) camera).setCenterX(player1.getCenterX());
-			}
-		}
+//		if (winner == false) {
+//			double averageX = (player1.getCenterX() + player2.getCenterX() )/ 2;
+//			((Camera) camera).setCenterX(averageX);
+//		}
+//		else {
+//			if (player1.getDispose()) {
+//				((Camera) camera).setCenterX(player2.getCenterX());
+//			}
+//			else {
+//				((Camera) camera).setCenterX(player1.getCenterX());
+//			}
+//		}
 		
 		
 		/*					*
@@ -177,11 +177,11 @@ public class GameUniverse implements Universe {
 			sprite.update(this, keyboard, actual_delta_time);
     	}
 
-		this.background.setShiftX(camera.getCenterX() * 0.85); 
-		
-		this.middleground.setShiftX(camera.getCenterX() * 0.45);
-
-		this.foreground.setShiftX(camera.getCenterX() * 0.10); 
+//		this.background.setShiftX(camera.getCenterX() * 0.85); 
+//		
+//		this.middleground.setShiftX(camera.getCenterX() * 0.45);
+//
+//		this.foreground.setShiftX(camera.getCenterX() * 0.10); 
 
 	}
 	
