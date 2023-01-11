@@ -16,9 +16,9 @@ public class ShellAnimation implements Animation {
 
 		universeCount++;
 		
-		if (universeCount == 2) {
-			this.current = new StartUniverse();
-		}
+//		if (universeCount == 2) {
+//			this.current = new StartUniverse();
+//		}
 		
 		if (universeCount == 1) {
 			return new GameUniverse();

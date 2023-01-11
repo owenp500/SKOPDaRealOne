@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class GameUniverse implements Universe {
 	
+	private boolean winner = false;
+	
 	private boolean complete = false;
 	private double xCenter;
 	private double yCenter;
@@ -105,7 +107,7 @@ public class GameUniverse implements Universe {
 		return player1;
 	}
 	public DisplayableSprite getPlayer2() {
-		return player1;
+		return player2;
 	}
 	public DisplayableSprite getCamera() {
 		return camera;
@@ -137,17 +139,40 @@ public class GameUniverse implements Universe {
 	
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
 		
+		
+		
+		
 		/*					*
 		 * Sets Camera POS.	*
 		 *					*/
-		double averageX = (player1.getCenterX() + player2.getCenterX() )/ 2;
-		((Camera) camera).setCenterX(averageX);
-
-		if (keyboard.keyDownOnce(27)) {
-			complete = true;
+		if (winner == false) {
+			double averageX = (player1.getCenterX() + player2.getCenterX() )/ 2;
+			((Camera) camera).setCenterX(averageX);
+		}
+		else {
+			if (player1.getDispose()) {
+				((Camera) camera).setCenterX(player2.getCenterX());
+			}
+			else {
+				((Camera) camera).setCenterX(player1.getCenterX());
+			}
+			
+			
 		}
 		
 		
+		/*					*
+		 * Dispose Player.	*
+		 *					*/
+		if (((Player)player2).getHealth() <= 0) {
+			player2.setDispose(true);
+			winner = true;
+		}
+		
+		if (((Player)player1).getHealth() <= 0) {
+			player1.setDispose(true);
+			winner = true;
+		}
 		
 		disposeSprites(); 
 
@@ -166,7 +191,7 @@ public class GameUniverse implements Universe {
 	
 	 protected void disposeSprites() {
 	      	
-		 	
+
 		 
 	    	//collect a list of sprites to dispose
 	    	//this is done in a temporary list to avoid a concurrent modification exception
