@@ -98,8 +98,9 @@ public class BoxSprite implements DisplayableSprite{
 	}
 	public void setDontMove(boolean DontMove) {
 	}
-	
-	public double getFacingDirection() {
+	public int getHurtBoxOffset() {
 		return 0;
 	}
+	
+	
 }

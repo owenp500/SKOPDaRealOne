@@ -440,5 +440,11 @@ public class SaniruSprite implements DisplayableSprite, MovableSprite, Health{
 		return null;
 	}
 
+	@Override
+	public int getHurtBoxOffset() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 
 }

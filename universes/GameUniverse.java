@@ -136,12 +136,21 @@ public class GameUniverse implements Universe {
 		else { return x;}
 	}
 	
+	public boolean checkHurtBoxCollision(DisplayableSprite sprite, DisplayableSprite BoxSprite) {
+		boolean colliding = false;
+		return false;
+	}
 	
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
 		
-		if(((Player) player1).getState() == State.ATTACK || ((Player) player2).getState() == State.ATTACK) {
-			//if either player is attacking then check if their respective hurtboxes are 
-			
+		//this is how the universe deals with the players' attacks
+		if(((Player) player1).getState() == State.ATTACK || ((Player) player2).getState() == State.ATTACK) {	
+			if(CollisionDetection.overlaps(player1, hurtBox2)) {
+				((Player)player1).set
+			}
+			if(CollisionDetection.overlaps(player2, hurtBox1)) {
+				
+			}
 		}
 		
 

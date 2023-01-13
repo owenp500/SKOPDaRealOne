@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
-import javax.swing.Box;
 
 public class BarrierSprite implements DisplayableSprite {
 
@@ -113,6 +112,13 @@ public class BarrierSprite implements DisplayableSprite {
 	public BoxSprite getHurtBox() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	@Override
+	public int getHurtBoxOffset() {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

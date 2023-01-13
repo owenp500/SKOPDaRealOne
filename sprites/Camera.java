@@ -133,4 +133,11 @@ public class Camera implements DisplayableSprite {
 		return null;
 	}
 
+
+	@Override
+	public int getHurtBoxOffset() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

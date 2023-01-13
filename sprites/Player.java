@@ -253,6 +253,9 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public BoxSprite getHurtBox() {
 		return hurtBox;
 	}
+	public int getHurtBoxOffset() {
+		return hurtBoxOffset;
+	}
 	public long getScore() {
 		return score;
 	}
@@ -283,7 +286,6 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public void setHealth(int dmg) {
 		health -= dmg;
 	}
-	
 	
 	//TODO! start of update function 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {

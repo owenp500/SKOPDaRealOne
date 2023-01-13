@@ -86,5 +86,11 @@ public class VirtualSprite implements DisplayableSprite {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public int getHurtBoxOffset() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 }
