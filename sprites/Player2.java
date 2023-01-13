@@ -13,13 +13,4 @@ public class Player2 extends Player {
 		super.setPlayer(2);
 		
 	}
-	
-	public int getHealth() {
-		return health;
-	}
-	
-	public void setHealth(int dmg) {
-		health -= dmg;
-	}
-
 }

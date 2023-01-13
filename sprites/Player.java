@@ -109,12 +109,15 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		
 		//you can add whatever states that don't yet have animations into this if statement
 		//TODO! delete these comments 
-		
-		long period = elapsedTime / PERIOD_LENGTH;
-		int frame = (int) (period % FRAMES);
-		int index = state.value * FRAMES + frame;
-		return frames[index];
-	
+		if( state!= state.ATTACK && state != state.STUN) {
+			long period = elapsedTime / PERIOD_LENGTH;
+			int frame = (int) (period % FRAMES);
+			int index = state.value * FRAMES + frame;
+			return frames[index];
+		}
+		else {
+			return frames[0];
+		}
 		
 
 		
@@ -122,6 +125,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	
 	public void setFacingRight(boolean right) {
 		facingRight = right;
+		hurtBoxOffset = (facingRight) ? 50: -50;
 	}
 	
 	public void setCenterX(double centerX) {		
@@ -267,44 +271,6 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		return state;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	public void stun(int length) {
 		state = state.STUN;
 		endStunFrame = elapsedFrames + 16;
@@ -327,7 +293,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		switch (state) 
 		{
 		case ATTACK:
-			hurtBox.setCenterX(centerX + 50);
+			hurtBox.setCenterX(centerX + hurtBoxOffset);
 			hurtBox.setCenterY(this.centerY);
 			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES) {
 				stun(3);
@@ -345,9 +311,15 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			//these actions can only be performed in the IDLE or MOVE states
 		default:
 			if (keyboard.keyDown(attackButton)) {
-				state = State.ATTACK;
-				velocityX = 0;
-			    startOfAttackFrame = elapsedFrames;
+				if (state == State.LOW_IDLE) {
+					
+				}
+				else {
+					state = State.ATTACK;
+					velocityX = 0;
+				    startOfAttackFrame = elapsedFrames;	
+				}
+				
 			}
 			else if (keyboard.keyDown(rightButton)) {
 				if(velocityX <= 100) {
@@ -362,12 +334,12 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 				}
 			} 
 			else if (keyboard.keyDown(downButton)) {
-				state = State.LOWIDLE;
+				state = State.LOW_IDLE;
 			} 
 			else {
 				state = State.IDLE;
 			}
-			hurtBox.setCenterX(centerX + hurtBoxOffset);
+			
 			break;				
 		}
 		

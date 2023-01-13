@@ -140,7 +140,7 @@ public class GameUniverse implements Universe {
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
 		
 		if(((Player) player1).getState() == State.ATTACK || ((Player) player2).getState() == State.ATTACK) {
-			//check collision of hurtboxes
+			//if either player is attacking then check if their respective hurtboxes are 
 			
 		}
 		

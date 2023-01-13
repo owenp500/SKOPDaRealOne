@@ -94,16 +94,12 @@ public class BoxSprite implements DisplayableSprite{
 	}
 	
 	public boolean isHit(boolean b) {
-		// TODO Auto-generated method stub
 		return false;
 	}
-	
-
 	public void setDontMove(boolean DontMove) {
 	}
 	
 	public double getFacingDirection() {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }
