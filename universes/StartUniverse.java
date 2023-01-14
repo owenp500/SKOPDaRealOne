@@ -42,28 +42,10 @@ public class StartUniverse implements Universe {
 
 
 	public StartUniverse () {
-		//ADD BACKGROUNDS
-		background = new BackgroundBackground();
-		middleground = new MiddleBackground();
-		foreground = new ForegroundBackground();
-		backgrounds.add(middleground);
-		backgrounds.add(background);
-		backgrounds.add(foreground);
-//		
-//		//ADD BARRIER
-//		BarrierSprite barrier1 =  new BarrierSprite(0,0,5,450,false, -700,360);
-//		BarrierSprite barrier2 = new BarrierSprite(0,0,5,450,false, 700,360);
-//			
-//		//ADD SPRITES
-//		camera = new Camera(17,216,100,100);
-		player1 = new Player1(-351,100, "Doug's Sprites");
-		player2 = new Player2(351,100, "Phil's Sprites");
-//		
-		sprites.add(player1.getHurtBox());
-		sprites.add(player2.getHurtBox());
-		sprites.add(player1); sprites.add(player2);
-//		sprites.add(barrier1); 
-//		sprites.add(barrier2); 
+			
+		//ADD SPRITES
+		player1 = new Player1(-351,351, "Doug's Sprites");
+		player2 = new Player2(351,351, "Phil's Sprites");
 
 	}
 
@@ -96,7 +78,7 @@ public class StartUniverse implements Universe {
 	}
 
 	public void setComplete(boolean complete) {
-		complete = true;
+		this.complete = true;
 	}
 
 	@Override
@@ -139,50 +121,15 @@ public class StartUniverse implements Universe {
 	
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
 		
-
-		/*					*
-		 * Sets Camera POS.	*
-		 *					*/
-//		if (winner == false) {
-//			double averageX = (player1.getCenterX() + player2.getCenterX() )/ 2;
-//			((Camera) camera).setCenterX(averageX);
-//		}
-//		else {
-//			if (player1.getDispose()) {
-//				((Camera) camera).setCenterX(player2.getCenterX());
-//			}
-//			else {
-//				((Camera) camera).setCenterX(player1.getCenterX());
-//			}
-//		}
-		
-		
-		/*					*
-		 * Dispose Player.	*
-		 *					*/
-		if (((Player)player2).getHealth() <= 0) {
-			player2.setDispose(true);
-			winner = true;
+		if (keyboard.keyDownOnce(27)) {
+			complete = true;
 		}
-		
-		if (((Player)player1).getHealth() <= 0) {
-			player1.setDispose(true);
-			winner = true;
-		}
-		
 		disposeSprites(); 
 
 		for (int i = 0; i < sprites.size(); i++) {
 			DisplayableSprite sprite = sprites.get(i);
 			sprite.update(this, keyboard, actual_delta_time);
     	}
-
-//		this.background.setShiftX(camera.getCenterX() * 0.85); 
-//		
-//		this.middleground.setShiftX(camera.getCenterX() * 0.45);
-//
-//		this.foreground.setShiftX(camera.getCenterX() * 0.10); 
-
 	}
 	
 	 protected void disposeSprites() {
