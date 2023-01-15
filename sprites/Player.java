@@ -231,7 +231,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		if (player == 1) {
 			for (DisplayableSprite sprite : sprites) {
 				if (sprite instanceof Player2) {
-					if (CollisionDetection.pixelBasedOverlaps(this, sprite,deltaX,deltaY)) {
+					if (CollisionDetection.overlaps(this, sprite,deltaX,deltaY)) {
 						colliding = true;
 						break;					
 					}
@@ -242,7 +242,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		if (player == 2) {
 			for (DisplayableSprite sprite : sprites) {
 				if (sprite instanceof Player1) {
-					if (CollisionDetection.pixelBasedOverlaps(this, sprite,deltaX,deltaY)) {
+					if (CollisionDetection.overlaps(this, sprite,deltaX,deltaY)) {
 						colliding = true;
 						break;					
 					}
