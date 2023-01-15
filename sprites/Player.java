@@ -48,6 +48,8 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	//changing these constants will change the length of each state
 	private final int ATTACK_FRAMES = 12;
 	private double startOfAttackFrame;
+	private boolean attackConnected = false;
+	
 	private final int DEFEND_FRAMES = 4; 
 	private final int HIT_FRAMES = 4;
 	private final int DOWN_FRAMES = 4;
@@ -109,14 +111,15 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		
 		//you can add whatever states that don't yet have animations into this if statement
 		//TODO! delete these comments 
-		if( state!= state.ATTACK && state != state.STUN) {
+		
 			long period = elapsedTime / PERIOD_LENGTH;
 			int frame = (int) (period % FRAMES);
 			int index = state.value * FRAMES + frame;
+		if(frames[index] != null) {
 			return frames[index];
 		}
 		else {
-			return frames[0];
+			return frames[1];
 		}
 		
 
@@ -287,29 +290,45 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		health -= dmg;
 	}
 	
+	//not sure what to call this method. 
+	//This is used by the universe when the sprite has collided with an enemy attack
+	public void hurt(int dmg) {
+		stun(10);
+		health -= dmg;
+	}
+	public boolean getAttackConnected() {
+		return attackConnected;
+	}
+	public void setAttackConnectedTrue() {
+		attackConnected = true;
+	}
+	
 	//TODO! start of update function 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		velocityX -= velocityX/8;
-		
-		
-		switch (state) 
-		{
-		case ATTACK:
-			hurtBox.setCenterX(centerX + hurtBoxOffset);
-			hurtBox.setCenterY(this.centerY);
-			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES) {
-				stun(3);
-				hurtBox.setCenterX(centerX);
-				hurtBox.setCenterY(this.centerY - 400);
-			}
-			break;
-		case DEFEND:
-			break;
+												
+		switch (state){ 
 		case STUN:
 			if(elapsedFrames >= endStunFrame) {
 				state =  state.IDLE;
 			}
 			break;
+		case ATTACK:
+			if(!attackConnected) {
+				hurtBox.setCenterX(centerX + hurtBoxOffset);
+				hurtBox.setCenterY(this.centerY);
+			}
+			
+			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES ||  attackConnected) {
+				stun(3);
+				hurtBox.setCenterX(centerX);
+				hurtBox.setCenterY(this.centerY - 400);
+				attackConnected = false;
+			}
+			break;
+		case DEFEND:
+			break;
+		
 			//these actions can only be performed in the IDLE or MOVE states
 		default:
 			if (keyboard.keyDown(attackButton)) {
