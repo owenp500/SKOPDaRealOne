@@ -120,7 +120,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	
 	public void setFacingRight(boolean right) {
 		facingRight = right;
-		hurtBoxOffset = (facingRight) ? 50: -50;
+		hurtBoxOffset = (facingRight) ? 100: -100;
 		knockBackVelocity = (facingRight) ? -500: 500;
 	}
 	

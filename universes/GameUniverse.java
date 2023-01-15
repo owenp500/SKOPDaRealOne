@@ -144,18 +144,24 @@ public class GameUniverse implements Universe {
 		Player player2AsPlayer = (Player) player2;
 		
 		//this is how the universe deals with the players' attacks
-
-		if((player1AsPlayer.getState() == State.ATTACK || player2AsPlayer.getState() == State.ATTACK)) {	
+		State player1State = player1AsPlayer.getState();
+		State player2State = player2AsPlayer.getState();
+		
+		if((player1State == State.ATTACK || player2State == State.ATTACK)) {	
 			if(CollisionDetection.overlaps(player1, hurtBox2) && player1AsPlayer.getAttackConnected()) {
 				player2AsPlayer.setAttackConnectedTrue();
 				player1AsPlayer.hurt(1);
 			}
-		if(((Player) player1).getState() == State.ATTACK || ((Player) player2).getState() == State.ATTACK) {	
-			if(CollisionDetection.overlaps(player1, hurtBox2)) {
-				//((Player)player1).set
-
+			if(CollisionDetection.overlaps(player2, hurtBox1) && !player2AsPlayer.getAttackConnected()) {
+				player1AsPlayer.setAttackConnectedTrue();
+				player2AsPlayer.hurt(1);
 			}
 		}
+		if((player1State == State.LOW_ATTACK || player2State == State.LOW_ATTACK)) {
+			if(CollisionDetection.overlaps(player1, hurtBox2) && player1AsPlayer.getAttackConnected()) {
+				player2AsPlayer.setAttackConnectedTrue();
+				player1AsPlayer.hurt(1);
+			}
 			if(CollisionDetection.overlaps(player2, hurtBox1) && !player2AsPlayer.getAttackConnected()) {
 				player1AsPlayer.setAttackConnectedTrue();
 				player2AsPlayer.hurt(1);
