@@ -49,6 +49,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private final int ATTACK_FRAMES = 12;
 	private double startOfAttackFrame;
 	private boolean attackConnected = false;
+	private int knockBackVelocity = 0;
 	
 	private final int DEFEND_FRAMES = 4; 
 	private final int HIT_FRAMES = 4;
@@ -75,7 +76,6 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		this.centerY = centerY;
 		this.health = 5;
 
-		hurtBoxOffset = (facingRight) ? 50: -50;
 //		if (framesLoaded == false) {
 			
 			frames = new Image[32];
@@ -112,9 +112,9 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		//you can add whatever states that don't yet have animations into this if statement
 		//TODO! delete these comments 
 		
-			long period = elapsedTime / PERIOD_LENGTH;
-			int frame = (int) (period % FRAMES);
-			int index = state.value * FRAMES + frame;
+		long period = elapsedTime / PERIOD_LENGTH;
+		int frame = (int) (period % FRAMES);
+		int index = state.value * FRAMES + frame;
 		if(frames[index] != null) {
 			return frames[index];
 		}
@@ -129,6 +129,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public void setFacingRight(boolean right) {
 		facingRight = right;
 		hurtBoxOffset = (facingRight) ? 50: -50;
+		knockBackVelocity = (facingRight) ? -500: 500;
 	}
 	
 	public void setCenterX(double centerX) {		
@@ -295,6 +296,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public void hurt(int dmg) {
 		stun(10);
 		health -= dmg;
+		velocityX = knockBackVelocity;
 	}
 	public boolean getAttackConnected() {
 		return attackConnected;
