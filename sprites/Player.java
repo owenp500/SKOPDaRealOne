@@ -64,7 +64,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private double endStunFrame; 
 	
 	// THE ORDER OF THE ANIMATIONS IN THE FOLDER
-	// Idle(0); Move(1); Defend(2); LowIdle(3); LowBlock(4); LowAttack(5); Stun(6); Attack(7)
+
 	
 	protected State state = State.IDLE;
 	
