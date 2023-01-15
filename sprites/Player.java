@@ -40,23 +40,22 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	
 	private double velocityX = 0;
 	private double velocityY = 0;
-	private double revolutions;
 	private long score =  0;
-	private int health = 0;
+	private int health = 100;
 	
-	//these variables detail how many frames each State should take to complete
-	//changing these constants will change the length of each state
+	private final int ATTACK_DAMAGE = 1;
 	private final int ATTACK_FRAMES = 12;
 	private double startOfAttackFrame;
 	private boolean attackConnected = false;
 	private int knockBackVelocity = 0;
 	
-	private final int DEFEND_FRAMES = 4; 
-	private final int HIT_FRAMES = 4;
-	private final int DOWN_FRAMES = 4;
-	//certain player states like attacking and blocking have to last a certain amount of time. 
-	//if a player attacks and misses the other player should be given an opportunity to respond, this is one of the core mechanics within all fighting games
-	//an action like crouching does not need to have any time limit, however attacking necessarily does need a limit
+	private boolean blockingHigh = false;
+	private boolean blockingLow = false;
+	
+	private boolean beingAttacked = false;
+	
+	private final int ATTACK_DOWN_FRAMES = 4;
+	
 	private BoxSprite hurtBox = new BoxSprite(50,50,0);
 	private int hurtBoxOffset = 0;
 	
@@ -74,7 +73,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		
 		this.centerX = centerX;
 		this.centerY = centerY;
-		this.health = 5;
+
 
 //		if (framesLoaded == false) {
 			
@@ -107,23 +106,16 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	}
 	
 	public Image getImage() {
-		
-		
-		//you can add whatever states that don't yet have animations into this if statement
-		//TODO! delete these comments 
-		
 		long period = elapsedTime / PERIOD_LENGTH;
 		int frame = (int) (period % FRAMES);
 		int index = state.value * FRAMES + frame;
+		//TODO! remove this later
 		if(frames[index] != null) {
 			return frames[index];
 		}
 		else {
 			return frames[1];
 		}
-		
-
-		
 	}
 	
 	public void setFacingRight(boolean right) {
@@ -192,10 +184,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public double getVelocityY() {
 		return velocityY;
 	}
-	public double getRevolutions() {
-		return revolutions;
-	}
-	
+
 	public boolean getDispose() {
 		
 		return dispose;
@@ -301,13 +290,32 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public boolean getAttackConnected() {
 		return attackConnected;
 	}
+	public boolean getBlockingLow() {
+		return blockingLow;
+	}
+	public boolean getBlockingHigh() {
+		return blockingHigh;
+	}
 	public void setAttackConnectedTrue() {
 		attackConnected = true;
 	}
+	public void setBeingAttackedTrue() {
+		beingAttacked = true;
+	}
+
+	
+	
 	
 	//TODO! start of update function 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		velocityX -= velocityX/8;
+		
+		if(beingAttacked) {
+			stun(10);
+			health -= ATTACK_DAMAGE;
+			velocityX = knockBackVelocity;
+		}
+		
 												
 		switch (state){ 
 		case STUN:
@@ -315,6 +323,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 				state =  state.IDLE;
 			}
 			break;
+			
 		case ATTACK:
 			if(!attackConnected) {
 				hurtBox.setCenterX(centerX + hurtBoxOffset);
@@ -322,7 +331,15 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			}
 			
 			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES ||  attackConnected) {
-				stun(3);
+				stun(ATTACK_DOWN_FRAMES);
+				hurtBox.setCenterX(centerX);
+				hurtBox.setCenterY(this.centerY - 400);
+				attackConnected = false;
+			}
+			break;
+		case LOW_ATTACK:
+			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES ||  attackConnected) {
+				stun(ATTACK_DOWN_FRAMES);
 				hurtBox.setCenterX(centerX);
 				hurtBox.setCenterY(this.centerY - 400);
 				attackConnected = false;
@@ -330,25 +347,21 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			break;
 		case DEFEND:
 			break;
-		
-			//these actions can only be performed in the IDLE or MOVE states
+		case LOW_DEFEND:
+			break;
 		default:
 			if (keyboard.keyDown(attackButton)) {
 				if (state == State.LOW_IDLE) {
-					
+					state = State.LOW_ATTACK;
 				}
 				else {
-					state = State.ATTACK;
-					velocityX = 0;
-				    startOfAttackFrame = elapsedFrames;	
+					state = State.ATTACK;	
 				}
-				
+				velocityX = 0;
+			    startOfAttackFrame = elapsedFrames;	
 			}
-			else if (keyboard.keyDown(rightButton)) {
-				if(velocityX <= 100) {
-					velocityX += 40;
-					state = State.MOVE;
-				}
+			else if (keyboard.keyDown(downButton)) {
+				state = State.LOW_IDLE;
 			}
 			else if (keyboard.keyDown(leftButton)) {
 				if (velocityX>= -100) {
@@ -356,17 +369,25 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 				state = State.MOVE;
 				}
 			} 
-			else if (keyboard.keyDown(downButton)) {
-				state = State.LOW_IDLE;
-			} 
+			else if (keyboard.keyDown(rightButton)) {
+				if(velocityX <= 100) {
+					velocityX += 40;
+					state = State.MOVE;
+				}
+			}  
 			else {
 				state = State.IDLE;
 			}
-			
+			if(state == state.LOW_IDLE) {
+				blockingLow = true;
+			}
 			break;				
 		}
 		
-		
+		boolean movingBackwards = (facingRight) ? velocityX < 0: velocityX > 0;
+		if (state == State.MOVE && movingBackwards) {
+			
+		}
 		
 		
 		

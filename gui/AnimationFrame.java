@@ -263,8 +263,8 @@ public class AnimationFrame extends JFrame {
 	
 	private void updateControls() {
 		
-		double player1Hp = (((Player) player1).getHealth() / 5.0) * 100;
-		double player2Hp = (((Player) player2).getHealth() / 5.0) * 100;
+		double player1Hp = (((Player) player1).getHealth());
+		double player2Hp = (((Player) player2).getHealth());
 		
 		if (start == true) {
 			this.lableHealth.setText(String.format("PLAYER ONE: %d%%", (int) limit(player1Hp)));

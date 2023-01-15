@@ -138,12 +138,6 @@ public class GameUniverse implements Universe {
 		}
 		else { return x;}
 	}
-	
-	public boolean checkHurtBoxCollision(DisplayableSprite sprite, DisplayableSprite BoxSprite) {
-		boolean colliding = false;
-		return false;
-	}
-	
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
 		//casting the players to the player class for readability
 		Player player1AsPlayer = (Player) player1;
@@ -215,9 +209,6 @@ public class GameUniverse implements Universe {
 	}
 	
 	 protected void disposeSprites() {
-	      	
-
-		 
 	    	//collect a list of sprites to dispose
 	    	//this is done in a temporary list to avoid a concurrent modification exception
 			for (int i = 0; i < sprites.size(); i++) {
