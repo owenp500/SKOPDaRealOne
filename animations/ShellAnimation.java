@@ -15,16 +15,16 @@ public class ShellAnimation implements Animation {
 	public Universe getNextUniverse() {
 
 		universeCount++;
-//		
-//		if (universeCount == 2) {
-//			this.current = new StartUniverse();
-//		}
-//		
+		
 		if (universeCount == 1) {
+			this.current = new StartUniverse();
+		}
+		
+		if (universeCount == 2) {
 			return new GameUniverse();
 		}
 		else {
-			return null;
+			return this.current;
 		}
 
 	}

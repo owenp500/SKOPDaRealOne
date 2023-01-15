@@ -1,4 +1,6 @@
 import javax.swing.*;
+import javax.swing.plaf.ColorUIResource;
+
 import java.awt.*;
 import java.util.ArrayList;
 import java.awt.event.MouseAdapter;
@@ -26,6 +28,8 @@ public class AnimationFrame extends JFrame {
 
 	private JPanel panel = null;
 	private JButton buttonPauseRun;
+	private JButton buttonStartRun;
+	private JButton buttonAIRun;
 	private JLabel lableHealth;
 	private JLabel lableHealth2;
 	private JLabel lableBotom;
@@ -39,6 +43,7 @@ public class AnimationFrame extends JFrame {
 	private long actual_delta_time = 0;							//MILLISECONDS
 	private long elapsed_time = 0;
 	private boolean isPaused = false;
+	private boolean start = false;
 
 	private KeyboardInput keyboard = new KeyboardInput();
 	private Universe universe = null;
@@ -57,6 +62,8 @@ public class AnimationFrame extends JFrame {
 	public AnimationFrame(Animation animation)
 	{
 		super("");
+		
+		this.universe = new StartUniverse();
 		
 		this.animation = animation;
 		this.setVisible(true);		
@@ -88,7 +95,7 @@ public class AnimationFrame extends JFrame {
 		});
 		
 		Container cp = getContentPane();
-		cp.setBackground(Color.BLACK);
+		cp.setBackground(Color.GRAY);
 		cp.setLayout(null);
 
 		panel = new DrawPanel();
@@ -103,12 +110,41 @@ public class AnimationFrame extends JFrame {
 				btnPauseRun_mouseClicked(arg0);
 			}
 		});
-
+		
+		buttonStartRun = new JButton("2 PLAYER");
+		buttonStartRun.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				btnStartRun_mouseClicked(arg0);
+			}
+		});
+		
+		buttonAIRun = new JButton("1 PLAYER");
+		buttonAIRun.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent arg0) {
+				btnStartRun_mouseClicked(arg0);
+			}
+		});
+		
+		
 		buttonPauseRun.setFont(new Font("SansSerif", Font.BOLD, 12));
 		buttonPauseRun.setBounds(SCREEN_WIDTH - 64, 20, 48, 32);
 		buttonPauseRun.setFocusable(false);
 		getContentPane().add(buttonPauseRun);
 		getContentPane().setComponentZOrder(buttonPauseRun, 0);
+
+		buttonStartRun.setFont(new Font("SansSerif", Font.BOLD, 50));
+		buttonStartRun.setBounds(SCREEN_WIDTH/2 - 300, SCREEN_HEIGHT /2 - 50, 300, 100);
+		buttonStartRun.setFocusable(false);
+		getContentPane().add(buttonStartRun);
+		getContentPane().setComponentZOrder(buttonStartRun, 0);
+		
+		buttonAIRun.setFont(new Font("SansSerif", Font.BOLD, 50));
+		buttonAIRun.setBounds(SCREEN_WIDTH/2 , SCREEN_HEIGHT /2 - 50, 300, 100);
+		buttonAIRun.setFocusable(false);
+		getContentPane().add(buttonAIRun);
+		getContentPane().setComponentZOrder(buttonAIRun, 0);
 
 		lableHealth = new JLabel("");
 		lableHealth.setForeground(Color.BLUE);
@@ -229,9 +265,12 @@ public class AnimationFrame extends JFrame {
 		
 		double player1Hp = (((Player) player1).getHealth() / 5.0) * 100;
 		double player2Hp = (((Player) player2).getHealth() / 5.0) * 100;
-
-		this.lableHealth.setText(String.format("PLAYER ONE: %d%%", (int) limit(player1Hp)));
-		this.lableHealth2.setText(String.format("PLAYER TWO: %d%%", (int) limit(player2Hp)));
+		
+		if (start == true) {
+			this.lableHealth.setText(String.format("PLAYER ONE: %d%%", (int) limit(player1Hp)));
+			this.lableHealth2.setText(String.format("PLAYER TWO: %d%%", (int) limit(player2Hp)));
+		}
+		
 		
 		if (player2Hp <= 0) {
 			this.lableBotom.setText(String.format("PLAYER ONE WINS"));
@@ -266,6 +305,25 @@ public class AnimationFrame extends JFrame {
 			this.buttonPauseRun.setText(">");
 		}
 	}
+	
+	protected void btnStartRun_mouseClicked(MouseEvent arg0) {
+		if (!start) {
+
+			start = true;
+			universe.setComplete(true);
+			buttonAIRun.setVisible(false);
+			buttonStartRun.setVisible(false);
+
+		}
+	}
+	
+//	protected void btnAIRun_mouseClicked(MouseEvent arg0) {
+//		if (!start) {
+//			start = true;
+//			animationLoop();
+//			universe.setComplete(true);
+//		}
+//	}
 
 	private void handleKeyboardInput() {
 		
