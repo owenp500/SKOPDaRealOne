@@ -58,9 +58,12 @@ public class GameUniverse implements Universe {
 		camera = new Camera(17,216,100,100);
 		player1 = new Player1(-351,351, "Doug's Sprites");
 		player2 = new Player2(351,351, "Phil's Sprites");
+		hurtBox1 = player1.getHurtBox();
+		hurtBox2 = player2.getHurtBox();
 		
-		sprites.add(player1.getHurtBox());
-		sprites.add(player2.getHurtBox());
+		
+		sprites.add(hurtBox1);
+		sprites.add(hurtBox2);
 		sprites.add(camera); sprites.add(player1); sprites.add(player2); 
 		sprites.add(barrier1); 
 		sprites.add(barrier2); 
@@ -142,14 +145,19 @@ public class GameUniverse implements Universe {
 	}
 	
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
+		//casting the players to the player class for readability
+		Player player1AsPlayer = (Player) player1;
+		Player player2AsPlayer = (Player) player2;
 		
 		//this is how the universe deals with the players' attacks
-		if(((Player) player1).getState() == State.ATTACK || ((Player) player2).getState() == State.ATTACK) {	
-			if(CollisionDetection.overlaps(player1, hurtBox2)) {
-				((Player)player1).set
+		if((player1AsPlayer.getState() == State.ATTACK || player2AsPlayer.getState() == State.ATTACK)) {	
+			if(CollisionDetection.overlaps(player1, hurtBox2) && player1AsPlayer.getAttackConnected()) {
+				player2AsPlayer.setAttackConnectedTrue();
+				player1AsPlayer.hurt(1);
 			}
-			if(CollisionDetection.overlaps(player2, hurtBox1)) {
-				
+			if(CollisionDetection.overlaps(player2, hurtBox1) && !player2AsPlayer.getAttackConnected()) {
+				player1AsPlayer.setAttackConnectedTrue();
+				player2AsPlayer.hurt(1);
 			}
 		}
 		
