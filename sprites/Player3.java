@@ -1,7 +1,5 @@
 
 public class Player3 extends Player {
-	
-	public int health = 5;
 
 	public Player3(int centerX, int centerY, String imageFolder) {
 		
@@ -30,5 +28,9 @@ public class Player3 extends Player {
 		        }
 		    }
 		}
-}
+	}
+		
+	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
+		super.update( universe,keyboard,actual_delta_time);
+	}
 }
