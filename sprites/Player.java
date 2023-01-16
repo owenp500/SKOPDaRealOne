@@ -39,25 +39,25 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	protected double velocityX = 0;
 	protected double velocityY = 0;
 	private long score =  0;
-	protected int health = 100;
+	private int health = 100;
 	
-	protected final int ATTACK_DAMAGE = 15;
-	protected final int BLOCK_DAMAGE = 3;
-	protected final int ATTACK_FRAMES = 12;
+	private final int ATTACK_DAMAGE = 15;
+	private final int BLOCK_DAMAGE = 3;
+	private final int ATTACK_FRAMES = 12;
 	private final int DEFEND_FRAMES = 4;
 	
 	protected double startOfAttackFrame;
 	private boolean attackConnected = false;
 	private boolean attackBlocked = false;
-	protected int knockBackVelocity = 0;
+	private int knockBackVelocity = 0;
 	
-	protected boolean defendingHigh = false;
-	protected boolean defendingLow = false;
-	protected double startOfDefendingFrame = 0;
+	private boolean defendingHigh = false;
+	private boolean defendingLow = false;
+	private double startOfDefendingFrame = 0;
 	
-	protected boolean beingAttacked = false;
+	private boolean beingAttacked = false;
 	
-	protected final int ATTACK_DOWN_FRAMES = 4;
+	private final int ATTACK_DOWN_FRAMES = 4;
 	
 	private BoxSprite hurtBox = new BoxSprite(50,125,0);
 	private int hurtBoxOffset = 0;

@@ -53,23 +53,6 @@ public class Player3 extends Player {
 			break;
 			
 		case ATTACK:
-			if(!getAttackConnected()) {
-				hurtBox.setCenterX(getCenterX() + getHurtBoxOffset());
-				hurtBox.setCenterY(this.getCenterY());
-			}
-
-			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES ||  getAttackConnected() || attackBlocked) {
-				if(attackBlocked) {
-					stun(ATTACK_DOWN_FRAMES * 10);
-					attackBlocked = false;
-				}
-				else {
-					stun(ATTACK_DOWN_FRAMES);
-				}
-				hurtBox.setCenterX(getCenterX());
-				hurtBox.setCenterY(this.getCenterY() - 400);
-				attackConnected = false;
-			}
 			break;
 		case LOW_ATTACK:
 		
