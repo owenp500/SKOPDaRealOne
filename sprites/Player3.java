@@ -15,7 +15,7 @@ public class Player3 extends Player {
 		
 		//assigning nothing for AI controls
 		super.setKeys();
-		super.setFacingRight(true);
+		super.setFacingRight(false);
 		
 		//assigns whether the player is 'player1' or 'player2' or 'AI' which is 'player3'
 		super.setPlayer(3);
