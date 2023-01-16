@@ -10,7 +10,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private static final int PERIOD_LENGTH = 200;			
 
 	private long elapsedTime = 0;
-	private double elapsedFrames = 0;
+	protected double elapsedFrames = 0;
 		
 	private boolean facingRight = true;
 
@@ -46,7 +46,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private final int ATTACK_FRAMES = 12;
 	private final int DEFEND_FRAMES = 4;
 	
-	private double startOfAttackFrame;
+	protected double startOfAttackFrame;
 	private boolean attackConnected = false;
 	private boolean attackBlocked = false;
 	private int knockBackVelocity = 0;
@@ -212,14 +212,14 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	}
 	//this is technically a temporary solution to collision detection.
 	//it would be more appropriate and less costly for the universe to check for the player
-	private boolean checkCollisionWithPlayer(ArrayList<DisplayableSprite> sprites, double deltaX, double deltaY) {
+	protected boolean checkCollisionWithPlayer(ArrayList<DisplayableSprite> sprites, double deltaX, double deltaY) {
 
 		//deltaX and deltaY represent the potential change in position
 		boolean colliding = false;
 		
 		if (player == 1) {
 			for (DisplayableSprite sprite : sprites) {
-				if (sprite instanceof Player2) {
+				if (sprite instanceof Player2 || sprite instanceof Player3) {
 					if (CollisionDetection.overlaps(this, sprite,deltaX,deltaY)) {
 						colliding = true;
 						break;					
@@ -229,6 +229,17 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			return colliding;
 		}
 		if (player == 2) {
+			for (DisplayableSprite sprite : sprites) {
+				if (sprite instanceof Player1) {
+					if (CollisionDetection.overlaps(this, sprite,deltaX,deltaY)) {
+						colliding = true;
+						break;					
+					}
+				}
+			}
+			return colliding;	
+		}
+		if (player == 3) {
 			for (DisplayableSprite sprite : sprites) {
 				if (sprite instanceof Player1) {
 					if (CollisionDetection.overlaps(this, sprite,deltaX,deltaY)) {

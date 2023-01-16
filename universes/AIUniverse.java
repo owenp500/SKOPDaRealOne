@@ -1,5 +1,6 @@
 import java.security.Principal;
 import java.util.ArrayList;
+import java.util.Random;
 
 
 public class AIUniverse implements Universe {
@@ -14,6 +15,8 @@ public class AIUniverse implements Universe {
 	private ArrayList<Background> backgrounds = new ArrayList<Background>();
 	private ArrayList<DisplayableSprite> sprites = new ArrayList<DisplayableSprite>();
 	private ArrayList<DisplayableSprite> disposalList = new ArrayList<DisplayableSprite>();
+	
+	private Random rand = new Random();
 
 
 	/*					*
@@ -43,12 +46,12 @@ public class AIUniverse implements Universe {
 
 	public AIUniverse () {
 		//ADD BACKGROUNDS
-//		background = new BackgroundBackground();
-//		middleground = new MiddleBackground();
-//		foreground = new ForegroundBackground();
-//		backgrounds.add(middleground);
-//		backgrounds.add(background);
-//		backgrounds.add(foreground);
+		background = new BackgroundBackground();
+		middleground = new MiddleBackground();
+		foreground = new ForegroundBackground();
+		backgrounds.add(middleground);
+		backgrounds.add(background);
+		backgrounds.add(foreground);
 		
 		//ADD BARRIER
 		BarrierSprite barrier1 =  new BarrierSprite(0,0,5,450,false, -700,360);
@@ -143,6 +146,7 @@ public class AIUniverse implements Universe {
 		//casting the players to the player class for readability
 		Player player1AsPlayer = (Player) player1;
 		Player player3AsPlayer = (Player) player3;
+		Player3 player3AsPlayer3 = (Player3) player3;
 		
 		//this is how the universe deals with the players' attacks
 		State player1State = player1AsPlayer.getState();
@@ -172,9 +176,9 @@ public class AIUniverse implements Universe {
 			}
 		}
 		
-		if (keyboard.keyDown(78)) {
-			((Player3) player3).chooseAction();
-		}
+		
+		//distance between players
+		double distance = abs(player3.getCenterX() - player1.getCenterX());
 		
 
 		/*					*
@@ -214,11 +218,11 @@ public class AIUniverse implements Universe {
 			sprite.update(this, keyboard, actual_delta_time);
     	}
 
-//		this.background.setShiftX(camera.getCenterX() * 0.85); 
-//		
-//		this.middleground.setShiftX(camera.getCenterX() * 0.45);
-//
-//		this.foreground.setShiftX(camera.getCenterX() * 0.10); 
+		this.background.setShiftX(camera.getCenterX() * 0.85); 
+		
+		this.middleground.setShiftX(camera.getCenterX() * 0.45);
+
+		this.foreground.setShiftX(camera.getCenterX() * 0.10); 
 		
 	}
 	

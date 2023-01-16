@@ -132,12 +132,7 @@ public class GameUniverse implements Universe {
 	public boolean centerOnPlayer() {
 		return true;
 	}		
-	public Double abs(double x) {
-		if(x<0) {
-			return -x;
-		}
-		else { return x;}
-	}
+
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
 		//casting the players to the player class for readability
 		Player player1AsPlayer = (Player) player1;

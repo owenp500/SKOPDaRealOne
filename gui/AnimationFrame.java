@@ -353,12 +353,6 @@ public class AnimationFrame extends JFrame {
 			screenCenterY += 1;
 		}
 		
-		
-		//TEMP TEST BUTTON
-		if (keyboard.keyDown(70)) {
-			((Player2) player2).setHealth(1);
-		}
-		
 	}
 
 	class DrawPanel extends JPanel {

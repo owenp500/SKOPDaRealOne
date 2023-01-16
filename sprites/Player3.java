@@ -1,14 +1,15 @@
 
 public class Player3 extends Player {
 	
-	
-	boolean collidingPlayer = false;
-	boolean collidingBarrierX = false;
+	private String action = "";
+	int actionNum = 0;
+	public boolean collidingPlayer = false;
+	public boolean collidingBarrierX = false;
+	public boolean isHalfHp = false;
 	
 	public Player3(int centerX, int centerY, String imageFolder) {
 		super(centerX, centerY, imageFolder);
 		
-		state = 0;
 		//assigning nothing for AI controls
 		super.setKeys();
 		super.setFacingRight(true);
@@ -19,31 +20,37 @@ public class Player3 extends Player {
 	}
 	
     public void chooseAction() {
-        if (state == 0) {
-            System.out.println("Going Left");
-            state = 1;
+    	
+        if (actionNum == 0) {		// Attacking
+        	attack();
         } 
         
-        else if (state == 1) {
-        	System.out.println("Going Right");
-        	state = 2;
+        else if (actionNum == 1 && collidingPlayer == false) {	// Moving Left
+        	chase();
         }
         
+        else if (actionNum == 2) {	// Moving Right
+        	run();
+        }
+        
+        else if (actionNum == 3) { // Crouching/Blocking
+        	crouch();
+        }
+        
+        
         else {
-            System.out.println("Up");
-            state = 0;
+            action = "Idle";
         }
     }
 	
 	
 	// MOVEMENT
-	public void chase() {
-		while (!collidingPlayer) {
-			if (super.velocityX>=-100)
-			{
-				super.velocityX -= 40;
-			}
+	public void chase() {	
+		if (super.velocityX>=-100)
+		{
+			super.velocityX -= 40;
 		}
+		action = "Left";
 		
 	}
 	
@@ -52,25 +59,34 @@ public class Player3 extends Player {
 		{
 			super.velocityX += 40;
 		}
+		action = "Right";
+		
+	}
+	
+	public void crouch() {
+		action = "Crouch";
 	}
 	
 	
 	// ATTACK
-	public void attack( ) {
-		
+	public void attack() {
+		action = "Attack";
 	}
+	
+	
 	
 	@Override
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
-		System.out.println(collidingPlayer);
+
+		
 		switch (state){ 
+		
 		case STUN:
 
 			break;
 			
 		case ATTACK:
 			
-			}
 			break;
 		case LOW_ATTACK:
 		
@@ -81,8 +97,9 @@ public class Player3 extends Player {
 		case LOW_DEFEND:
 			
 			break;
+			
 		default:
-			if (keyboard.keyDown(attackButton)) {
+			if (action == "Attack") { ///Attack
 				if (state == State.LOW_IDLE) {
 					state = State.LOW_ATTACK;
 				}
@@ -92,16 +109,16 @@ public class Player3 extends Player {
 				velocityX = 0;
 			    startOfAttackFrame = elapsedFrames;	
 			}
-			else if (keyboard.keyDown(downButton)) {
+			else if (action == "Crouch") { /// Down
 				state = State.LOW_IDLE;
 			}
-			else if (keyboard.keyDown(leftButton)) {
+			else if (action == "Left") { /// Left
 				if (velocityX>= -100) {
 				velocityX -= 40; 
 				state = State.MOVE;
 				}
 			} 
-			else if (keyboard.keyDown(rightButton)) {
+			else if (action == "Right") { /// Right
 				if(velocityX <= 100) {
 					velocityX += 40;
 					state = State.MOVE;
@@ -110,14 +127,25 @@ public class Player3 extends Player {
 			else {
 				state = State.IDLE;
 			}
-			break;				
+			break;
 		}
-		super.update(universe, keyboard, actual_delta_time);
 		
-		double deltaX = actual_delta_time * 0.001 * velocityX;
-		
-		 collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);
-		 collidingPlayer = checkCollisionWithPlayer(universe.getSprites(), deltaX, 0);
+	super.update(universe, keyboard, actual_delta_time);
+	int player3Hp = getHealth();
+	
+	if (player3Hp < 51) {
+		isHalfHp = true;
+		System.out.println(isHalfHp);
+	}
+	
+	double deltaX = actual_delta_time * 0.001 * velocityX;
+	
+	collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);
+	collidingPlayer = checkCollisionWithPlayer(universe.getSprites(), deltaX, 0);
+	
+	if (collidingBarrierX || collidingPlayer) {
+		velocityX  = 0;
 	}
 
+	}
 }
