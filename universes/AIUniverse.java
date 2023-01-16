@@ -146,7 +146,7 @@ public class AIUniverse implements Universe {
 		//casting the players to the player class for readability
 		Player player1AsPlayer = (Player) player1;
 		Player player3AsPlayer = (Player) player3;
-		Player3 player3AsPlayer3 = (Player3) player3;
+		Player3 playerAsAI = (Player3) player3;
 		
 		//this is how the universe deals with the players' attacks
 		State player1State = player1AsPlayer.getState();
@@ -176,9 +176,46 @@ public class AIUniverse implements Universe {
 			}
 		}
 		
-		
+		/*					*
+		 * AI State Handler.*
+		 *					*/
 		//distance between players
 		double distance = abs(player3.getCenterX() - player1.getCenterX());
+		
+		//Decision Tree while player1 is crouching...
+		if (player1State == State.LOW_IDLE || player1State == State.LOW_ATTACK) {
+			
+			if (playerAsAI.state == State.LOW_IDLE && player1State == State.LOW_ATTACK) {
+				playerAsAI.actionNum = 3;
+			}
+			else if (playerAsAI.state == State.LOW_IDLE) {
+				playerAsAI.actionNum = 0;
+			}
+			else if (distance <= 230 && playerAsAI.state != State.LOW_IDLE) {
+				playerAsAI.actionNum = 1;
+			}
+			else {
+				playerAsAI.actionNum = 5;
+			}
+			
+			
+			
+		}
+		// Decision Tree while player1 is standing up...
+		else {
+			if (player1State == State.ATTACK ) {
+				playerAsAI.actionNum = 3;
+			}
+			else if (playerAsAI.collidingPlayer || player1State == State.STUN) {
+				playerAsAI.actionNum = 0;
+			}
+			else if (distance >= 201) {
+				playerAsAI.actionNum = 2;
+			}
+			else {
+				playerAsAI.actionNum = 5;
+			}
+		}
 		
 
 		/*					*

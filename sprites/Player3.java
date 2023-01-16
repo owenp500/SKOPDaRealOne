@@ -19,38 +19,13 @@ public class Player3 extends Player {
 
 	}
 	
-    public void chooseAction() {
-    	
-        if (actionNum == 0) {		// Attacking
-        	attack();
-        } 
-        
-        else if (actionNum == 1 && collidingPlayer == false) {	// Moving Left
-        	chase();
-        }
-        
-        else if (actionNum == 2) {	// Moving Right
-        	run();
-        }
-        
-        else if (actionNum == 3) { // Crouching/Blocking
-        	crouch();
-        }
-        
-        
-        else {
-            action = "Idle";
-        }
-    }
-	
-	
+
 	// MOVEMENT
 	public void chase() {	
 		if (super.velocityX>=-100)
 		{
 			super.velocityX -= 40;
 		}
-		action = "Left";
 		
 	}
 	
@@ -59,20 +34,9 @@ public class Player3 extends Player {
 		{
 			super.velocityX += 40;
 		}
-		action = "Right";
 		
 	}
-	
-	public void crouch() {
-		action = "Crouch";
-	}
-	
-	
-	// ATTACK
-	public void attack() {
-		action = "Attack";
-	}
-	
+
 	
 	
 	@Override
@@ -99,7 +63,7 @@ public class Player3 extends Player {
 			break;
 			
 		default:
-			if (action == "Attack") { ///Attack
+			if (actionNum == 0) { ///Attack
 				if (state == State.LOW_IDLE) {
 					state = State.LOW_ATTACK;
 				}
@@ -109,16 +73,16 @@ public class Player3 extends Player {
 				velocityX = 0;
 			    startOfAttackFrame = elapsedFrames;	
 			}
-			else if (action == "Crouch") { /// Down
+			else if (actionNum == 1) { /// Down
 				state = State.LOW_IDLE;
 			}
-			else if (action == "Left") { /// Left
+			else if (actionNum == 2) { /// Left
 				if (velocityX>= -100) {
 				velocityX -= 40; 
 				state = State.MOVE;
 				}
 			} 
-			else if (action == "Right") { /// Right
+			else if (actionNum == 3) { /// Right
 				if(velocityX <= 100) {
 					velocityX += 40;
 					state = State.MOVE;
