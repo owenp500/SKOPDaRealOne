@@ -2,6 +2,8 @@
 public class Player3 extends Player {
 	
 	private int state = 0;
+	boolean collidingPlayer = false;
+	boolean collidingBarrierX = false;
 	
 	public Player3(int centerX, int centerY, String imageFolder) {
 		super(centerX, centerY, imageFolder);
@@ -36,10 +38,13 @@ public class Player3 extends Player {
 	
 	// MOVEMENT
 	public void chase() {
-		if (super.velocityX>=-100)
-		{
-			super.velocityX -= 40;
+		while (!collidingPlayer) {
+			if (super.velocityX>=-100)
+			{
+				super.velocityX -= 40;
+			}
 		}
+		
 	}
 	
 	public void run() {
@@ -55,9 +60,15 @@ public class Player3 extends Player {
 		
 	}
 	
-	
-		
+	@Override
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
-		super.update( universe,keyboard,actual_delta_time);
+		System.out.println(collidingPlayer);
+		super.update(universe, keyboard, actual_delta_time);
+		
+		double deltaX = actual_delta_time * 0.001 * velocityX;
+		
+		 collidingBarrierX = checkCollisionWithBarrier(universe.getSprites(), deltaX, 0);
+		 collidingPlayer = checkCollisionWithPlayer(universe.getSprites(), deltaX, 0);
 	}
+
 }

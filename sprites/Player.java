@@ -35,8 +35,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private boolean isAtExit = false;
 	private static String proximityMessage;
 	private int player;
-	
-//	protected String imageFolder = null;
+	private boolean isAI = false;
 	
 	protected double velocityX = 0;
 	protected double velocityY = 0;
@@ -59,6 +58,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	
 	private BoxSprite hurtBox = new BoxSprite(50,50,0);
 	private int hurtBoxOffset = 0;
+
 	
 	
 	private ArrayList<DisplayableSprite> sprites;
@@ -87,7 +87,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	}
 	
 	public void setKeys() {
-		// TODO Auto-generated method stub
+		isAI  = true;
 	}
 	
 	public void setKeys(int attack, int left, int right, int down) {
@@ -312,6 +312,8 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		velocityX -= velocityX/8;
 		
+		if (!isAI) {
+		
 		if(beingAttacked) {
 			stun(10);
 			health -= ATTACK_DAMAGE;
@@ -387,6 +389,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 				blockingLow = true;
 			}
 			break;				
+		}
 		}
 		
 		
