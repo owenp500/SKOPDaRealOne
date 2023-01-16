@@ -210,8 +210,9 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		}		
 		return colliding;		
 	}
-	
-	protected boolean checkCollisionWithPlayer(ArrayList<DisplayableSprite> sprites, double deltaX, double deltaY) {
+	//this is technically a temporary solution to collision detection.
+	//it would be more appropriate and less costly for the universe to check for the player
+	private boolean checkCollisionWithPlayer(ArrayList<DisplayableSprite> sprites, double deltaX, double deltaY) {
 
 		//deltaX and deltaY represent the potential change in position
 		boolean colliding = false;
@@ -352,7 +353,6 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 				hurtBox.setCenterX(centerX + hurtBoxOffset);
 				hurtBox.setCenterY(this.centerY);
 			}
-			
 			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES ||  attackConnected || attackBlocked) {
 				if(attackBlocked) {
 					stun(ATTACK_DOWN_FRAMES * 10);
@@ -367,10 +367,18 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			}
 			break;
 		case LOW_ATTACK:
-			hurtBox.setCenterX(centerX + hurtBoxOffset);
-			hurtBox.setCenterY(this.centerY);
-			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES ||  attackConnected) {
-				stun(ATTACK_DOWN_FRAMES);
+			if(!attackConnected) {
+				hurtBox.setCenterX(centerX + hurtBoxOffset);
+				hurtBox.setCenterY(this.centerY);
+			}
+			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES ||  attackConnected || attackBlocked) {
+				if(attackBlocked) {
+					stun(ATTACK_DOWN_FRAMES * 10);
+					attackBlocked = false;
+				}
+				else {
+					stun(ATTACK_DOWN_FRAMES);
+				}
 				hurtBox.setCenterX(centerX);
 				hurtBox.setCenterY(this.centerY - 400);
 				attackConnected = false;
@@ -382,6 +390,9 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			}
 			break;
 		case LOW_DEFEND:
+			if(elapsedFrames - startOfDefendingFrame >= DEFEND_FRAMES) {
+				state = State.IDLE;
+			}
 			break;
 		default:
 			if (keyboard.keyDown(attackButton)) {

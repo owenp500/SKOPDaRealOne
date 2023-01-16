@@ -174,7 +174,7 @@ public class GameUniverse implements Universe {
 		if((player1State == State.LOW_ATTACK || player2State == State.LOW_ATTACK)) {
 			if(CollisionDetection.overlaps(player1, hurtBox2) && !player1AsPlayer.getAttackConnected()) {
 				if(player1AsPlayer.getDefendingLow()) {
-					player1AsPlayer.setAttackBlockedTrue();
+					player1AsPlayer.setDefendingLowTrue();
 					player2AsPlayer.setAttackBlockedTrue();
 				}
 				else {
@@ -188,7 +188,7 @@ public class GameUniverse implements Universe {
 					player1AsPlayer.setAttackBlockedTrue();
 				}
 				else {
-					player1AsPlayer.setDefendingLowTrue();
+					player1AsPlayer.setAttackConnectedTrue();
 					player2AsPlayer.setBeingAttackedTrue();
 				}
 			}
