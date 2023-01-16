@@ -6,6 +6,9 @@ public class Player3 extends Player {
 	public boolean collidingPlayer = false;
 	public boolean collidingBarrierX = false;
 	public boolean isHalfHp = false;
+	private boolean attackBlocked = false;
+	private boolean attackConnected = false;
+	private BoxSprite hurtBox;
 	
 	public Player3(int centerX, int centerY, String imageFolder) {
 		super(centerX, centerY, imageFolder);
@@ -16,7 +19,7 @@ public class Player3 extends Player {
 		
 		//assigns whether the player is 'player1' or 'player2' or 'AI' which is 'player3'
 		super.setPlayer(3);
-
+		hurtBox = getHurtBox();
 	}
 	
 
@@ -50,7 +53,23 @@ public class Player3 extends Player {
 			break;
 			
 		case ATTACK:
-			
+			if(!getAttackConnected()) {
+				hurtBox.setCenterX(getCenterX() + getHurtBoxOffset());
+				hurtBox.setCenterY(this.getCenterY());
+			}
+
+			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES ||  getAttackConnected() || attackBlocked) {
+				if(attackBlocked) {
+					stun(ATTACK_DOWN_FRAMES * 10);
+					attackBlocked = false;
+				}
+				else {
+					stun(ATTACK_DOWN_FRAMES);
+				}
+				hurtBox.setCenterX(getCenterX());
+				hurtBox.setCenterY(this.getCenterY() - 400);
+				attackConnected = false;
+			}
 			break;
 		case LOW_ATTACK:
 		

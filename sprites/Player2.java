@@ -1,7 +1,7 @@
 
 public class Player2 extends Player {
 	
-	public int health = 5;
+	public int health = 100;
 	
 	public Player2(int centerX, int centerY, String imageFolder) {
 		

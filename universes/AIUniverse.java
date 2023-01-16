@@ -203,11 +203,14 @@ public class AIUniverse implements Universe {
 		}
 		// Decision Tree while player1 is standing up...
 		else {
-			if (player1State == State.ATTACK ) {
+			if (player1State == State.ATTACK && distance <= 260) {
 				playerAsAI.actionNum = 3;
 			}
 			else if (playerAsAI.collidingPlayer || player1State == State.STUN) {
-				playerAsAI.actionNum = 0;
+				if (distance <= 260) {
+					playerAsAI.actionNum = 0;
+				}
+				
 			}
 			else if (distance >= 201) {
 				playerAsAI.actionNum = 2;
