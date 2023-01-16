@@ -292,7 +292,8 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		return blockingLow;
 	}
 	public boolean getBlockingHigh() {
-		return blockingHigh;
+		boolean movingBackwards = (facingRight) ? velocityX < 0: velocityX > 0;
+		return (state == State.MOVE && movingBackwards);
 	}
 	public void setAttackConnectedTrue() {
 		attackConnected = true;
@@ -388,10 +389,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			break;				
 		}
 		
-		boolean movingBackwards = (facingRight) ? velocityX < 0: velocityX > 0;
-		if (state == State.MOVE && movingBackwards) {
-			
-		}
+		
 		
 		
 		

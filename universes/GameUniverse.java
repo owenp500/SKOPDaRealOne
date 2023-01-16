@@ -147,9 +147,11 @@ public class GameUniverse implements Universe {
 		State player1State = player1AsPlayer.getState();
 		State player2State = player2AsPlayer.getState();
 		
+		
+		
 		if((player1State == State.ATTACK || player2State == State.ATTACK)) {	
 			if(CollisionDetection.overlaps(player1, hurtBox2) && !player1AsPlayer.getAttackConnected()) {
-				if (player2AsPlayer.getBlockingHigh()) {
+				if (player1AsPlayer.getBlockingHigh()) {
 					
 				}
 				player2AsPlayer.setAttackConnectedTrue();
