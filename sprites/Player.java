@@ -37,8 +37,8 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	
 //	protected String imageFolder = null;
 	
-	private double velocityX = 0;
-	private double velocityY = 0;
+	protected double velocityX = 0;
+	protected double velocityY = 0;
 	private long score =  0;
 	private int health = 100;
 	

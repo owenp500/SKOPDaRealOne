@@ -119,11 +119,11 @@ public class AnimationFrame extends JFrame {
 			}
 		});
 		
-		buttonAIRun = new JButton("1 PLAYER");
+		buttonAIRun = new JButton("AI PLAYER");
 		buttonAIRun.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent arg0) {
-				btnStartRun_mouseClicked(arg0);
+				btnAIRun_mouseClicked(arg0);
 			}
 		});
 		
@@ -278,11 +278,6 @@ public class AnimationFrame extends JFrame {
 		else if (player1Hp <= 0) {
 			this.lableBotom.setText(String.format("PLAYER TWO WINS"));
 		}
-//		this.lblTop.setText(String.format("Time: %9.3f;  centerX: %5d; centerY: %5d;  scale: %3.3f", elapsed_time / 1000.0, screenCenterX, screenCenterY, scale));
-//		this.lblBottom.setText(Integer.toString(universeLevel));
-//		if (universe != null) {
-//			this.lblBottom.setText(universe.toString());
-//		}
 
 	}
 
@@ -308,22 +303,25 @@ public class AnimationFrame extends JFrame {
 	
 	protected void btnStartRun_mouseClicked(MouseEvent arg0) {
 		if (!start) {
-
 			start = true;
 			universe.setComplete(true);
+			universeLevel++;
 			buttonAIRun.setVisible(false);
 			buttonStartRun.setVisible(false);
 
 		}
 	}
 	
-//	protected void btnAIRun_mouseClicked(MouseEvent arg0) {
-//		if (!start) {
-//			start = true;
-//			animationLoop();
-//			universe.setComplete(true);
-//		}
-//	}
+	protected void btnAIRun_mouseClicked(MouseEvent arg0) {
+		if (!start) {	
+			start = true;
+			animation.getNextUniverse();
+			universe.setComplete(true);
+			universeLevel += 2;
+			buttonAIRun.setVisible(false);
+			buttonStartRun.setVisible(false);
+		}
+	}
 
 	private void handleKeyboardInput() {
 		

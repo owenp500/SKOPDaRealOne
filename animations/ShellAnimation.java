@@ -23,6 +23,10 @@ public class ShellAnimation implements Animation {
 		if (universeCount == 2) {
 			return new GameUniverse();
 		}
+		
+		if (universeCount == 3) {
+			return new AIUniverse();
+		}
 		else {
 			return this.current;
 		}
