@@ -11,7 +11,6 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 
 	private long elapsedTime = 0;
 	private double elapsedFrames = 0;
-	private int currentFrame = 0;
 		
 	private boolean facingRight = true;
 
@@ -45,23 +44,25 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private final int ATTACK_DAMAGE = 15;
 	private final int BLOCK_DAMAGE = 3;
 	private final int ATTACK_FRAMES = 12;
+	private final int DEFEND_FRAMES = 4;
+	
 	private double startOfAttackFrame;
 	private boolean attackConnected = false;
+	private boolean attackBlocked = false;
 	private int knockBackVelocity = 0;
 	
-	private boolean blockingHigh = false;
-	private boolean blockingLow = false;
+	private boolean defendingHigh = false;
+	private boolean defendingLow = false;
+	private double startOfDefendingFrame = 0;
 	
 	private boolean beingAttacked = false;
 	
 	private final int ATTACK_DOWN_FRAMES = 4;
 	
-	private BoxSprite hurtBox = new BoxSprite(50,50,0);
+	private BoxSprite hurtBox = new BoxSprite(50,125,0);
 	private int hurtBoxOffset = 0;
 
 	
-	
-	private ArrayList<DisplayableSprite> sprites;
 	private double endStunFrame; 
 	
 	protected State state = State.IDLE;
@@ -266,7 +267,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	}
 	
 	public void stun(int length) {
-		state = state.STUN;
+		state = State.STUN;
 		endStunFrame = elapsedFrames + 16;
 	}
 	
@@ -288,21 +289,27 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public boolean getAttackConnected() {
 		return attackConnected;
 	}
-	public boolean getBlockingLow() {
-		return blockingLow;
+	public boolean getDefendingLow() {
+		return (state == State.LOW_IDLE);
 	}
-	public boolean getBlockingHigh() {
+	public boolean getDefendingHigh() {
 		boolean movingBackwards = (facingRight) ? velocityX < 0: velocityX > 0;
 		return (state == State.MOVE && movingBackwards);
 	}
 	public void setAttackConnectedTrue() {
 		attackConnected = true;
 	}
+	public void setAttackBlockedTrue() {
+		attackBlocked = true;
+	}
 	public void setBeingAttackedTrue() {
 		beingAttacked = true;
 	}
-	public void setBlockingTrue() {
-		
+	public void setDefendingHighTrue() {
+		defendingHigh = true;
+	}
+	public void setDefendingLowTrue() {
+		defendingLow = true;
 	}
 
 	
@@ -311,21 +318,32 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	//TODO! start of update function 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		velocityX -= velocityX/8;
-		
+
 		if (!isAI) {
-		
+			
 		if(beingAttacked) {
 			stun(10);
 			health -= ATTACK_DAMAGE;
 			velocityX = knockBackVelocity;
 			beingAttacked = false;
 		}
-		
+		else if(defendingHigh) {
+			health -= BLOCK_DAMAGE;
+			state = State.DEFEND;
+			startOfDefendingFrame = elapsedFrames;
+			defendingHigh = false;
+		}
+		else if(defendingLow) {
+			health -= BLOCK_DAMAGE;
+			state = State.LOW_DEFEND;
+			startOfDefendingFrame = elapsedFrames;
+			defendingLow = false;
+		}
 												
 		switch (state){ 
 		case STUN:
 			if(elapsedFrames >= endStunFrame) {
-				state =  state.IDLE;
+				state = State.IDLE;
 			}
 			break;
 			
@@ -335,8 +353,14 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 				hurtBox.setCenterY(this.centerY);
 			}
 			
-			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES ||  attackConnected) {
-				stun(ATTACK_DOWN_FRAMES);
+			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES ||  attackConnected || attackBlocked) {
+				if(attackBlocked) {
+					stun(ATTACK_DOWN_FRAMES * 10);
+					attackBlocked = false;
+				}
+				else {
+					stun(ATTACK_DOWN_FRAMES);
+				}
 				hurtBox.setCenterX(centerX);
 				hurtBox.setCenterY(this.centerY - 400);
 				attackConnected = false;
@@ -353,6 +377,9 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			}
 			break;
 		case DEFEND:
+			if(elapsedFrames - startOfDefendingFrame >= DEFEND_FRAMES) {
+				state = State.IDLE;
+			}
 			break;
 		case LOW_DEFEND:
 			break;
@@ -385,9 +412,6 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			else {
 				state = State.IDLE;
 			}
-			if(state == state.LOW_IDLE) {
-				blockingLow = true;
-			}
 			break;				
 		}
 		}
@@ -410,7 +434,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		
 		elapsedTime +=  actual_delta_time;
 		this.elapsedFrames ++;
-		currentFrame = (int) this.elapsedFrames % FRAMES;																													
+	//	currentFrame = (int) this.elapsedFrames % FRAMES;																													
 		
 	}
 	//TODO! end of update function!

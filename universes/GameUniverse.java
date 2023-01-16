@@ -148,28 +148,49 @@ public class GameUniverse implements Universe {
 		State player2State = player2AsPlayer.getState();
 		
 		
-		
+		//this block of code checks wether attacks hit, miss, or are blocked and then communicates that to the players
 		if((player1State == State.ATTACK || player2State == State.ATTACK)) {	
 			if(CollisionDetection.overlaps(player1, hurtBox2) && !player1AsPlayer.getAttackConnected()) {
-				if (player1AsPlayer.getBlockingHigh()) {
-					
+				if (player1AsPlayer.getDefendingHigh()) {
+					player1AsPlayer.setDefendingHighTrue();
+					player2AsPlayer.setAttackBlockedTrue();
 				}
-				player2AsPlayer.setAttackConnectedTrue();
-				player1AsPlayer.setBeingAttackedTrue();
+				else {
+					player2AsPlayer.setAttackConnectedTrue();
+					player1AsPlayer.setBeingAttackedTrue();
+				}
 			}
 			if(CollisionDetection.overlaps(player2, hurtBox1) && !player2AsPlayer.getAttackConnected()) {
-				player1AsPlayer.setAttackConnectedTrue();
-				player2AsPlayer.setBeingAttackedTrue();
+				if (player2AsPlayer.getDefendingHigh()) {
+					player2AsPlayer.setDefendingHighTrue();
+					player1AsPlayer.setAttackBlockedTrue();
+				}
+				else {
+					player1AsPlayer.setAttackConnectedTrue();
+					player2AsPlayer.setBeingAttackedTrue();
+				}
 			}
 		}
 		if((player1State == State.LOW_ATTACK || player2State == State.LOW_ATTACK)) {
 			if(CollisionDetection.overlaps(player1, hurtBox2) && !player1AsPlayer.getAttackConnected()) {
-				player2AsPlayer.setAttackConnectedTrue();
-				player1AsPlayer.setBeingAttackedTrue();
+				if(player1AsPlayer.getDefendingLow()) {
+					player1AsPlayer.setAttackBlockedTrue();
+					player2AsPlayer.setAttackBlockedTrue();
+				}
+				else {
+					player2AsPlayer.setAttackConnectedTrue();
+					player1AsPlayer.setBeingAttackedTrue();
+				}
 			}
 			if(CollisionDetection.overlaps(player2, hurtBox1) && !player2AsPlayer.getAttackConnected()) {
-				player1AsPlayer.setAttackConnectedTrue();
-				player2AsPlayer.setBeingAttackedTrue();
+				if(player2AsPlayer.getDefendingLow()) {
+					player2AsPlayer.setDefendingLowTrue();
+					player1AsPlayer.setAttackBlockedTrue();
+				}
+				else {
+					player1AsPlayer.setDefendingLowTrue();
+					player2AsPlayer.setBeingAttackedTrue();
+				}
 			}
 		}
 		
