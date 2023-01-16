@@ -148,23 +148,26 @@ public class GameUniverse implements Universe {
 		State player2State = player2AsPlayer.getState();
 		
 		if((player1State == State.ATTACK || player2State == State.ATTACK)) {	
-			if(CollisionDetection.overlaps(player1, hurtBox2) && player1AsPlayer.getAttackConnected()) {
+			if(CollisionDetection.overlaps(player1, hurtBox2) && !player1AsPlayer.getAttackConnected()) {
+				if (player2AsPlayer.getBlockingHigh()) {
+					
+				}
 				player2AsPlayer.setAttackConnectedTrue();
-				player1AsPlayer.hurt(1);
+				player1AsPlayer.setBeingAttackedTrue();
 			}
 			if(CollisionDetection.overlaps(player2, hurtBox1) && !player2AsPlayer.getAttackConnected()) {
 				player1AsPlayer.setAttackConnectedTrue();
-				player2AsPlayer.hurt(1);
+				player2AsPlayer.setBeingAttackedTrue();
 			}
 		}
 		if((player1State == State.LOW_ATTACK || player2State == State.LOW_ATTACK)) {
-			if(CollisionDetection.overlaps(player1, hurtBox2) && player1AsPlayer.getAttackConnected()) {
+			if(CollisionDetection.overlaps(player1, hurtBox2) && !player1AsPlayer.getAttackConnected()) {
 				player2AsPlayer.setAttackConnectedTrue();
-				player1AsPlayer.hurt(1);
+				player1AsPlayer.setBeingAttackedTrue();
 			}
 			if(CollisionDetection.overlaps(player2, hurtBox1) && !player2AsPlayer.getAttackConnected()) {
 				player1AsPlayer.setAttackConnectedTrue();
-				player2AsPlayer.hurt(1);
+				player2AsPlayer.setBeingAttackedTrue();
 			}
 		}
 		

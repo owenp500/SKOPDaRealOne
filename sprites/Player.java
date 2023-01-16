@@ -43,7 +43,8 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private long score =  0;
 	private int health = 100;
 	
-	private final int ATTACK_DAMAGE = 1;
+	private final int ATTACK_DAMAGE = 15;
+	private final int BLOCK_DAMAGE = 3;
 	private final int ATTACK_FRAMES = 12;
 	private double startOfAttackFrame;
 	private boolean attackConnected = false;
@@ -302,6 +303,9 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public void setBeingAttackedTrue() {
 		beingAttacked = true;
 	}
+	public void setBlockingTrue() {
+		
+	}
 
 	
 	
@@ -314,6 +318,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			stun(10);
 			health -= ATTACK_DAMAGE;
 			velocityX = knockBackVelocity;
+			beingAttacked = false;
 		}
 		
 												
@@ -338,6 +343,8 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			}
 			break;
 		case LOW_ATTACK:
+			hurtBox.setCenterX(centerX + hurtBoxOffset);
+			hurtBox.setCenterY(this.centerY);
 			if(elapsedFrames - startOfAttackFrame >= ATTACK_FRAMES ||  attackConnected) {
 				stun(ATTACK_DOWN_FRAMES);
 				hurtBox.setCenterX(centerX);
