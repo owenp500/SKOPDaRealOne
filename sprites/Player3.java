@@ -1,7 +1,7 @@
 
 public class Player3 extends Player {
 	
-	private int state = 0;
+	
 	boolean collidingPlayer = false;
 	boolean collidingBarrierX = false;
 	
@@ -63,6 +63,55 @@ public class Player3 extends Player {
 	@Override
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		System.out.println(collidingPlayer);
+		switch (state){ 
+		case STUN:
+
+			break;
+			
+		case ATTACK:
+			
+			}
+			break;
+		case LOW_ATTACK:
+		
+			break;
+		case DEFEND:
+			
+			break;
+		case LOW_DEFEND:
+			
+			break;
+		default:
+			if (keyboard.keyDown(attackButton)) {
+				if (state == State.LOW_IDLE) {
+					state = State.LOW_ATTACK;
+				}
+				else {
+					state = State.ATTACK;	
+				}
+				velocityX = 0;
+			    startOfAttackFrame = elapsedFrames;	
+			}
+			else if (keyboard.keyDown(downButton)) {
+				state = State.LOW_IDLE;
+			}
+			else if (keyboard.keyDown(leftButton)) {
+				if (velocityX>= -100) {
+				velocityX -= 40; 
+				state = State.MOVE;
+				}
+			} 
+			else if (keyboard.keyDown(rightButton)) {
+				if(velocityX <= 100) {
+					velocityX += 40;
+					state = State.MOVE;
+				}
+			}  
+			else {
+				state = State.IDLE;
+			}
+			break;				
+		}
 		super.update(universe, keyboard, actual_delta_time);
 		
 		double deltaX = actual_delta_time * 0.001 * velocityX;

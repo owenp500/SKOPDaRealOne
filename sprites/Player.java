@@ -320,7 +320,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
 		velocityX -= velocityX/8;
 
-		if (!isAI) {
+		
 			
 		if(beingAttacked) {
 			stun(10);
@@ -395,36 +395,37 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			}
 			break;
 		default:
-			if (keyboard.keyDown(attackButton)) {
-				if (state == State.LOW_IDLE) {
-					state = State.LOW_ATTACK;
+			if (!isAI) {
+				if (keyboard.keyDown(attackButton)) {
+					if (state == State.LOW_IDLE) {
+						state = State.LOW_ATTACK;
+					}
+					else {
+						state = State.ATTACK;	
+					}
+					velocityX = 0;
+				    startOfAttackFrame = elapsedFrames;	
 				}
-				else {
-					state = State.ATTACK;	
+				else if (keyboard.keyDown(downButton)) {
+					state = State.LOW_IDLE;
 				}
-				velocityX = 0;
-			    startOfAttackFrame = elapsedFrames;	
-			}
-			else if (keyboard.keyDown(downButton)) {
-				state = State.LOW_IDLE;
-			}
-			else if (keyboard.keyDown(leftButton)) {
-				if (velocityX>= -100) {
-				velocityX -= 40; 
-				state = State.MOVE;
-				}
-			} 
-			else if (keyboard.keyDown(rightButton)) {
-				if(velocityX <= 100) {
-					velocityX += 40;
+				else if (keyboard.keyDown(leftButton)) {
+					if (velocityX>= -100) {
+					velocityX -= 40; 
 					state = State.MOVE;
+					}
+				} 
+				else if (keyboard.keyDown(rightButton)) {
+					if(velocityX <= 100) {
+						velocityX += 40;
+						state = State.MOVE;
+					}
+				}  
+				else {
+					state = State.IDLE;
 				}
-			}  
-			else {
-				state = State.IDLE;
+				break;				
 			}
-			break;				
-		}
 		}
 		
 		
