@@ -150,7 +150,7 @@ public class AIUniverse implements Universe {
 		
 		if((player1State == State.ATTACK || player3State == State.ATTACK)) {	
 			if(CollisionDetection.overlaps(player1, hurtBox2) && !player1AsPlayer.getAttackConnected()) {
-				if (player3AsPlayer.getBlockingHigh()) {
+				if (player3AsPlayer.getDefendingHigh()) {
 					
 				}
 				player3AsPlayer.setAttackConnectedTrue();
