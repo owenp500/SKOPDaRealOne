@@ -64,9 +64,6 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private ArrayList<DisplayableSprite> sprites;
 	private double endStunFrame; 
 	
-	// THE ORDER OF THE ANIMATIONS IN THE FOLDER
-
-	
 	protected State state = State.IDLE;
 	
 	
@@ -74,9 +71,6 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		
 		this.centerX = centerX;
 		this.centerY = centerY;
-
-
-//		if (framesLoaded == false) {
 			
 			frames = new Image[32];
 			for (int frame = 0; frame < 32; frame++) {
@@ -89,12 +83,13 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 					System.err.println(e.toString());
 				}		
 			
-			}
-//			if (frames[0] != null) {
-//				framesLoaded = true;
-//			}
-//		}		
+			}	
 	}
+	
+	public void setKeys() {
+		// TODO Auto-generated method stub
+	}
+	
 	public void setKeys(int attack, int left, int right, int down) {
 		attackButton = attack;
 		leftButton = left;
@@ -105,6 +100,8 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	public void setPlayer(int player) {
 		this.player = player;
 	}
+	
+	
 	
 	public Image getImage() {
 		long period = elapsedTime / PERIOD_LENGTH;
@@ -414,13 +411,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		this.elapsedFrames ++;
 		currentFrame = (int) this.elapsedFrames % FRAMES;																													
 		
-		//TODO! little bit of debug printing ;)
-		
-		String attackString = (state == State.ATTACK) ? "attacking": "no";
-		if( state == state.STUN) {
-			attackString = "stun"; 
-		}
-		System.out.printf("\n %s",attackString);
 	}
 	//TODO! end of update function!
+	
 }
