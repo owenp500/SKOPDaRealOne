@@ -43,12 +43,12 @@ public class AIUniverse implements Universe {
 
 	public AIUniverse () {
 		//ADD BACKGROUNDS
-		background = new BackgroundBackground();
-		middleground = new MiddleBackground();
-		foreground = new ForegroundBackground();
-		backgrounds.add(middleground);
-		backgrounds.add(background);
-		backgrounds.add(foreground);
+//		background = new BackgroundBackground();
+//		middleground = new MiddleBackground();
+//		foreground = new ForegroundBackground();
+//		backgrounds.add(middleground);
+//		backgrounds.add(background);
+//		backgrounds.add(foreground);
 		
 		//ADD BARRIER
 		BarrierSprite barrier1 =  new BarrierSprite(0,0,5,450,false, -700,360);
@@ -139,36 +139,41 @@ public class AIUniverse implements Universe {
 		else { return x;}
 	}
 	public void update(KeyboardInput keyboard, long actual_delta_time) {
+				
 		//casting the players to the player class for readability
 		Player player1AsPlayer = (Player) player1;
-		Player player2AsPlayer = (Player) player3;
+		Player player3AsPlayer = (Player) player3;
 		
 		//this is how the universe deals with the players' attacks
 		State player1State = player1AsPlayer.getState();
-		State player2State = player2AsPlayer.getState();
+		State player3State = player3AsPlayer.getState();
 		
-		if((player1State == State.ATTACK || player2State == State.ATTACK)) {	
+		if((player1State == State.ATTACK || player3State == State.ATTACK)) {	
 			if(CollisionDetection.overlaps(player1, hurtBox2) && !player1AsPlayer.getAttackConnected()) {
-				if (player2AsPlayer.getBlockingHigh()) {
+				if (player3AsPlayer.getBlockingHigh()) {
 					
 				}
-				player2AsPlayer.setAttackConnectedTrue();
+				player3AsPlayer.setAttackConnectedTrue();
 				player1AsPlayer.setBeingAttackedTrue();
 			}
-			if(CollisionDetection.overlaps(player3, hurtBox1) && !player2AsPlayer.getAttackConnected()) {
+			if(CollisionDetection.overlaps(player3, hurtBox1) && !player3AsPlayer.getAttackConnected()) {
 				player1AsPlayer.setAttackConnectedTrue();
-				player2AsPlayer.setBeingAttackedTrue();
+				player3AsPlayer.setBeingAttackedTrue();
 			}
 		}
-		if((player1State == State.LOW_ATTACK || player2State == State.LOW_ATTACK)) {
+		if((player1State == State.LOW_ATTACK || player3State == State.LOW_ATTACK)) {
 			if(CollisionDetection.overlaps(player1, hurtBox2) && !player1AsPlayer.getAttackConnected()) {
-				player2AsPlayer.setAttackConnectedTrue();
+				player3AsPlayer.setAttackConnectedTrue();
 				player1AsPlayer.setBeingAttackedTrue();
 			}
-			if(CollisionDetection.overlaps(player3, hurtBox1) && !player2AsPlayer.getAttackConnected()) {
+			if(CollisionDetection.overlaps(player3, hurtBox1) && !player3AsPlayer.getAttackConnected()) {
 				player1AsPlayer.setAttackConnectedTrue();
-				player2AsPlayer.setBeingAttackedTrue();
+				player3AsPlayer.setBeingAttackedTrue();
 			}
+		}
+		
+		if (keyboard.keyDown(78)) {
+			((Player3) player3).chooseAction();
 		}
 		
 
@@ -209,11 +214,11 @@ public class AIUniverse implements Universe {
 			sprite.update(this, keyboard, actual_delta_time);
     	}
 
-		this.background.setShiftX(camera.getCenterX() * 0.85); 
-		
-		this.middleground.setShiftX(camera.getCenterX() * 0.45);
-
-		this.foreground.setShiftX(camera.getCenterX() * 0.10); 
+//		this.background.setShiftX(camera.getCenterX() * 0.85); 
+//		
+//		this.middleground.setShiftX(camera.getCenterX() * 0.45);
+//
+//		this.foreground.setShiftX(camera.getCenterX() * 0.10); 
 		
 	}
 	
