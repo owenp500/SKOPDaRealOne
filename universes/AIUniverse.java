@@ -154,25 +154,46 @@ public class AIUniverse implements Universe {
 		
 		if((player1State == State.ATTACK || player3State == State.ATTACK)) {	
 			if(CollisionDetection.overlaps(player1, hurtBox2) && !player1AsPlayer.getAttackConnected()) {
-				if (player3AsPlayer.getDefendingHigh()) {
-					
+				if (player1AsPlayer.getDefendingHigh()) {
+					player1AsPlayer.setDefendingHighTrue();
+					player3AsPlayer.setAttackBlockedTrue();
 				}
-				player3AsPlayer.setAttackConnectedTrue();
-				player1AsPlayer.setBeingAttackedTrue();
+				else {
+					player3AsPlayer.setAttackConnectedTrue();
+					player1AsPlayer.setBeingAttackedTrue();
+				}
 			}
 			if(CollisionDetection.overlaps(player3, hurtBox1) && !player3AsPlayer.getAttackConnected()) {
-				player1AsPlayer.setAttackConnectedTrue();
-				player3AsPlayer.setBeingAttackedTrue();
+				if (player3AsPlayer.getDefendingHigh() || player3AsPlayer.getBuffer()) {
+					player3AsPlayer.setDefendingHighTrue();
+					player1AsPlayer.setAttackBlockedTrue();
+				}
+				else {
+					player1AsPlayer.setAttackConnectedTrue();
+					player3AsPlayer.setBeingAttackedTrue();
+				}
 			}
 		}
 		if((player1State == State.LOW_ATTACK || player3State == State.LOW_ATTACK)) {
 			if(CollisionDetection.overlaps(player1, hurtBox2) && !player1AsPlayer.getAttackConnected()) {
-				player3AsPlayer.setAttackConnectedTrue();
-				player1AsPlayer.setBeingAttackedTrue();
+				if(player1AsPlayer.getDefendingLow()) {
+					player1AsPlayer.setDefendingLowTrue();
+					player3AsPlayer.setAttackBlockedTrue();
+				}
+				else {
+					player3AsPlayer.setAttackConnectedTrue();
+					player1AsPlayer.setBeingAttackedTrue();
+				}
 			}
 			if(CollisionDetection.overlaps(player3, hurtBox1) && !player3AsPlayer.getAttackConnected()) {
-				player1AsPlayer.setAttackConnectedTrue();
-				player3AsPlayer.setBeingAttackedTrue();
+				if(player3AsPlayer.getDefendingLow()) {
+					player3AsPlayer.setDefendingLowTrue();
+					player1AsPlayer.setAttackBlockedTrue();
+				}
+				else {
+					player1AsPlayer.setAttackConnectedTrue();
+					player3AsPlayer.setBeingAttackedTrue();
+				}
 			}
 		}
 		
@@ -194,11 +215,7 @@ public class AIUniverse implements Universe {
 			else if (distance <= 230 && playerAsAI.state != State.LOW_IDLE) {
 				playerAsAI.actionNum = 1;
 			}
-			else {
-				playerAsAI.actionNum = 5;
-			}
-			
-			
+	
 			
 		}
 		// Decision Tree while player1 is standing up...

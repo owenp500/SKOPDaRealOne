@@ -1,6 +1,7 @@
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
+import java.nio.Buffer;
 import java.util.ArrayList;
 import javax.imageio.ImageIO;
 
@@ -9,8 +10,9 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	
 	private static final int PERIOD_LENGTH = 200;			
 
-	private long elapsedTime = 0;
+	protected long elapsedTime = 0;
 	protected double elapsedFrames = 0;
+	
 		
 	private boolean facingRight = true;
 
@@ -25,6 +27,10 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	private int leftButton = 37;
 	private int rightButton = 39;
 	private int downButton = 40;
+	
+	//this is to allow blocking to feel a bit more forgiving by buffering the blocking input
+	protected boolean blockBuffer = false;
+
 	
 	private double centerX = 0;
 	private double centerY = 0;
@@ -298,6 +304,9 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		health -= dmg;
 		velocityX = knockBackVelocity;
 	}
+	public boolean getBuffer() {
+		return blockBuffer;
+	}
 	public boolean getAttackConnected() {
 		return attackConnected;
 	}
@@ -324,15 +333,14 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 		defendingLow = true;
 	}
 
+
 	
 	
 	
 	//TODO! start of update function 
 	public void update(Universe universe, KeyboardInput keyboard, long actual_delta_time) {
-		velocityX -= velocityX/8;
-
+		velocityX -= velocityX/8;		
 		
-			
 		if(beingAttacked) {
 			stun(10);
 			health -= ATTACK_DAMAGE;
@@ -340,12 +348,14 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			beingAttacked = false;
 		}
 		else if(defendingHigh) {
+			
 			health -= BLOCK_DAMAGE;
 			state = State.DEFEND;
 			startOfDefendingFrame = elapsedFrames;
 			defendingHigh = false;
 		}
 		else if(defendingLow) {
+			blockBuffer = true;
 			health -= BLOCK_DAMAGE;
 			state = State.LOW_DEFEND;
 			startOfDefendingFrame = elapsedFrames;
@@ -396,6 +406,8 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			}
 			break;
 		case DEFEND:
+
+			
 			if(elapsedFrames - startOfDefendingFrame >= DEFEND_FRAMES) {
 				state = State.IDLE;
 			}
@@ -439,10 +451,8 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 			}
 		}
 		
-		
-		
-		
-		
+	
+
 
 		double deltaX = actual_delta_time * 0.001 * velocityX;
 		

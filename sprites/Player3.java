@@ -9,13 +9,14 @@ public class Player3 extends Player {
 	private boolean attackBlocked = false;
 	private boolean attackConnected = false;
 	private BoxSprite hurtBox;
+	private double keyPressed = 0;
 	
 	public Player3(int centerX, int centerY, String imageFolder) {
 		super(centerX, centerY, imageFolder);
 		
 		//assigning nothing for AI controls
 		super.setKeys();
-		super.setFacingRight(true);
+		super.setFacingRight(false);
 		
 		//assigns whether the player is 'player1' or 'player2' or 'AI' which is 'player3'
 		super.setPlayer(3);
@@ -23,22 +24,22 @@ public class Player3 extends Player {
 	}
 	
 
-	// MOVEMENT
-	public void chase() {	
-		if (super.velocityX>=-100)
-		{
-			super.velocityX -= 40;
-		}
-		
-	}
-	
-	public void run() {
-		if (super.velocityX<=100)
-		{
-			super.velocityX += 40;
-		}
-		
-	}
+//	// MOVEMENT
+//	public void chase() {	
+//		if (super.velocityX>=-100)
+//		{
+//			super.velocityX -= 40;
+//		}
+//		
+//	}
+//	
+//	public void run() {
+//		if (super.velocityX<=100)
+//		{
+//			super.velocityX += 40;
+//		}
+//		
+//	}
 
 	
 	
@@ -85,6 +86,10 @@ public class Player3 extends Player {
 				}
 			} 
 			else if (actionNum == 3) { /// Right
+
+				keyPressed = elapsedTime;
+				blockBuffer = true;
+				
 				if(velocityX <= 100) {
 					velocityX += 40;
 					state = State.MOVE;
@@ -96,12 +101,14 @@ public class Player3 extends Player {
 			break;
 		}
 		
+		if (elapsedTime - keyPressed >= 232) {
+			blockBuffer = false;
+		}
 	super.update(universe, keyboard, actual_delta_time);
 	int player3Hp = getHealth();
 	
 	if (player3Hp < 51) {
 		isHalfHp = true;
-		System.out.println(isHalfHp);
 	}
 	
 	double deltaX = actual_delta_time * 0.001 * velocityX;
