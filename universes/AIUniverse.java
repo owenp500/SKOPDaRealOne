@@ -186,7 +186,7 @@ public class AIUniverse implements Universe {
 				}
 			}
 			if(CollisionDetection.overlaps(player3, hurtBox1) && !player3AsPlayer.getAttackConnected()) {
-				if(player3AsPlayer.getDefendingLow()) {
+				if(player3AsPlayer.getDefendingLow() || player3AsPlayer.getBuffer()) {
 					player3AsPlayer.setDefendingLowTrue();
 					player1AsPlayer.setAttackBlockedTrue();
 				}
