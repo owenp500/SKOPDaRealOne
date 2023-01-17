@@ -65,7 +65,7 @@ public class Player implements DisplayableSprite , MovableSprite, CollidingSprit
 	
 	private final int ATTACK_DOWN_FRAMES = 4;
 	
-	private BoxSprite hurtBox = new BoxSprite(50,125,0);
+	private BoxSprite hurtBox = new BoxSprite(50,50,0,false);
 	private int hurtBoxOffset = 0;
 
 	

@@ -15,11 +15,11 @@ public class BoxSprite implements DisplayableSprite{
 	private boolean dispose = false;	
 	private DisplayableSprite sprite = null;
 	
-	public BoxSprite(double height, double width, double centerX) {
+	public BoxSprite(double height, double width, double centerX, boolean visible) {
 		this.height = height;
 		this.width = width;
 		this .centerX = centerX;
-		
+		this.visible = visible;
 		
 		if (image == null) {
 			try {
